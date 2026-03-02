@@ -31,12 +31,11 @@ body { background:var(--bg); color:var(--text); font-family:'Segoe UI',system-ui
 .hero-stat .val { font-size:13px; font-weight:800; color:var(--accent); }
 .hero-stat .lbl { font-size:9px; color:var(--muted); margin-top:1px; letter-spacing:.5px; }
 
-/* ── DAY TABS SCROLLER ── */
+/* ── DAY TABS ── */
 .tabs-wrap {
   position:sticky; top:0; z-index:100;
   background:rgba(10,14,26,.92); backdrop-filter:blur(12px);
-  border-bottom:1px solid var(--border);
-  padding:10px 0 0;
+  border-bottom:1px solid var(--border); padding:10px 0 0;
 }
 .tabs-scroll {
   display:flex; gap:6px; overflow-x:auto; padding:0 16px 10px;
@@ -53,63 +52,50 @@ body { background:var(--bg); color:var(--text); font-family:'Segoe UI',system-ui
   text-align:center; min-width:52px;
 }
 .tab-btn .date { font-size:10px; display:block; color:var(--muted); margin-top:1px; }
-.tab-btn.active {
-  background:linear-gradient(135deg,var(--accent),var(--accent2));
-  border-color:transparent; color:#fff;
-}
+.tab-btn.active { background:linear-gradient(135deg,var(--accent),var(--accent2)); border-color:transparent; color:#fff; }
 .tab-btn.active .date { color:rgba(255,255,255,.7); }
 
-/* ── CONTENT ── */
+/* ── PAGES ── */
 .pages { position:relative; }
 .page { display:none; padding:20px 16px 100px; animation:fadeIn .25s ease; }
 .page.active { display:block; }
 @keyframes fadeIn { from{opacity:0;transform:translateY(6px)} to{opacity:1;transform:translateY(0)} }
 
-/* Day Header Card */
+/* Day Header */
 .day-head {
   background:linear-gradient(135deg,var(--card2),var(--card));
   border:1px solid var(--border); border-radius:20px;
   padding:18px; margin-bottom:16px; position:relative; overflow:hidden;
 }
 .day-head::before {
-  content:'';position:absolute;top:-20px;right:-20px;
-  width:100px;height:100px;
+  content:'';position:absolute;top:-20px;right:-20px;width:100px;height:100px;
   background:radial-gradient(circle,rgba(79,142,247,.12),transparent 70%);
 }
 .day-head-top { display:flex; align-items:center; gap:14px; }
 .day-num-badge {
   width:50px;height:50px;border-radius:14px;flex-shrink:0;
   background:linear-gradient(135deg,var(--accent),var(--accent2));
-  display:flex;flex-direction:column;align-items:center;justify-content:center;
-  font-weight:900;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;font-weight:900;
 }
 .day-num-badge .dn { font-size:10px; opacity:.8; }
 .day-num-badge .dd { font-size:20px; line-height:1; }
 .day-head-text h2 { font-size:16px; font-weight:800; line-height:1.3; }
 .day-head-text p { font-size:12px; color:var(--muted); margin-top:3px; }
 .day-pills { display:flex; flex-wrap:wrap; gap:5px; margin-top:12px; }
-.pill {
-  font-size:10px; padding:3px 10px; border-radius:50px; font-weight:600;
-  background:rgba(79,142,247,.12); color:var(--accent); border:1px solid rgba(79,142,247,.2);
-}
+.pill { font-size:10px; padding:3px 10px; border-radius:50px; font-weight:600; background:rgba(79,142,247,.12); color:var(--accent); border:1px solid rgba(79,142,247,.2); }
 .pill.hotel { background:rgba(124,92,252,.12); color:#a78bfa; border-color:rgba(124,92,252,.2); }
 .pill.food  { background:rgba(245,158,11,.12); color:var(--orange); border-color:rgba(245,158,11,.2); }
 .pill.ski   { background:rgba(16,185,129,.12); color:var(--green); border-color:rgba(16,185,129,.2); }
 .pill.red   { background:rgba(239,68,68,.12); color:#f87171; border-color:rgba(239,68,68,.2); }
 
 /* Section Label */
-.sec-label {
-  font-size:10px;text-transform:uppercase;letter-spacing:1.5px;
-  color:var(--muted);margin:18px 0 10px;padding-bottom:6px;
-  border-bottom:1px solid var(--border);
-}
+.sec-label { font-size:10px;text-transform:uppercase;letter-spacing:1.5px;color:var(--muted);margin:18px 0 10px;padding-bottom:6px;border-bottom:1px solid var(--border); }
 
 /* Flight Card */
 .flight-card {
   background:linear-gradient(135deg,rgba(79,142,247,.1),rgba(124,92,252,.1));
   border:1px solid rgba(79,142,247,.25); border-radius:14px;
-  padding:14px 16px; display:flex; align-items:center; justify-content:space-between;
-  margin:10px 0;
+  padding:14px 16px; display:flex; align-items:center; justify-content:space-between; margin:10px 0;
 }
 .flight-city { font-weight:800; font-size:18px; }
 .flight-time { font-size:11px; color:var(--muted); margin-top:2px; }
@@ -119,80 +105,126 @@ body { background:var(--bg); color:var(--text); font-family:'Segoe UI',system-ui
 
 /* Timeline */
 .timeline { position:relative; padding-left:26px; }
-.timeline::before {
-  content:'';position:absolute;left:7px;top:4px;bottom:4px;
-  width:2px;border-radius:2px;
-  background:linear-gradient(180deg,var(--accent),var(--accent2),rgba(124,92,252,.1));
-}
+.timeline::before { content:'';position:absolute;left:7px;top:4px;bottom:4px;width:2px;border-radius:2px;background:linear-gradient(180deg,var(--accent),var(--accent2),rgba(124,92,252,.1)); }
 .tl-item { position:relative; margin-bottom:18px; }
-.tl-dot {
-  position:absolute;left:-22px;top:4px;
-  width:10px;height:10px;border-radius:50%;
-  background:var(--accent);border:2px solid var(--bg);
-  box-shadow:0 0 8px rgba(79,142,247,.5);
-}
+.tl-dot { position:absolute;left:-22px;top:4px;width:10px;height:10px;border-radius:50%;background:var(--accent);border:2px solid var(--bg);box-shadow:0 0 8px rgba(79,142,247,.5); }
 .tl-dot.green { background:var(--green); box-shadow:0 0 8px rgba(16,185,129,.5); }
 .tl-dot.purple { background:var(--accent2); box-shadow:0 0 8px rgba(124,92,252,.5); }
 .tl-time { font-size:10px; font-weight:700; color:var(--accent); letter-spacing:.5px; }
 .tl-title { font-size:14px; font-weight:600; margin-top:2px; line-height:1.4; }
 .tl-sub { font-size:12px; color:var(--muted); margin-top:3px; line-height:1.5; }
-.tl-note {
-  background:var(--card2); border-left:3px solid var(--accent2);
-  border-radius:0 8px 8px 0; padding:8px 10px; margin-top:7px;
-  font-size:12px; color:var(--muted); line-height:1.5;
-}
+.tl-note { background:var(--card2); border-left:3px solid var(--accent2); border-radius:0 8px 8px 0; padding:8px 10px; margin-top:7px; font-size:12px; color:var(--muted); line-height:1.5; }
 
-/* ── Checklist ── */
+/* Checklist */
 .check-list { display:flex; flex-direction:column; gap:6px; }
-.check-item {
-  display:flex; align-items:center; gap:10px;
-  padding:9px 12px; border-radius:12px;
-  background:var(--card2); border:1px solid var(--border);
-  cursor:pointer; transition:background .15s, border-color .15s;
-  user-select:none;
-}
+.check-item { display:flex; align-items:center; gap:10px; padding:9px 12px; border-radius:12px; background:var(--card2); border:1px solid var(--border); cursor:pointer; transition:background .15s, border-color .15s; user-select:none; }
 .check-item.is-done { background:rgba(16,185,129,.06); border-color:rgba(16,185,129,.2); }
 .check-item:active { transform:scale(.98); }
-.cb {
-  width:20px; height:20px; border-radius:6px; flex-shrink:0;
-  display:flex; align-items:center; justify-content:center;
-  transition:all .2s; position:relative; box-sizing:border-box;
-}
+.cb { width:20px; height:20px; border-radius:6px; flex-shrink:0; display:flex; align-items:center; justify-content:center; transition:all .2s; position:relative; box-sizing:border-box; }
 .cb.todo { border:2px solid var(--border); background:transparent; }
-.cb.done {
-  background:var(--green); border:2px solid var(--green);
-  box-shadow:0 0 8px rgba(16,185,129,.35);
-}
-.cb.done::after {
-  content:'';
-  width:5px; height:9px;
-  border-right:2.5px solid #fff; border-bottom:2.5px solid #fff;
-  transform:rotate(45deg) translate(-1px,-1px);
-  display:block;
-}
+.cb.done { background:var(--green); border:2px solid var(--green); box-shadow:0 0 8px rgba(16,185,129,.35); }
+.cb.done::after { content:''; width:5px; height:9px; border-right:2.5px solid #fff; border-bottom:2.5px solid #fff; transform:rotate(45deg) translate(-1px,-1px); display:block; }
 .check-text { font-size:13px; line-height:1.4; flex:1; transition:color .15s; }
 .check-text.done { text-decoration:line-through; color:var(--muted); }
 .check-text.todo { color:var(--text); }
 
 /* Info grid */
 .info-grid { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
-.info-tile {
-  background:var(--card2); border:1px solid var(--border); border-radius:14px; padding:14px;
-}
+.info-tile { background:var(--card2); border:1px solid var(--border); border-radius:14px; padding:14px; }
 .info-tile h4 { font-size:10px; text-transform:uppercase; letter-spacing:1px; color:var(--muted); margin-bottom:8px; }
 .info-tile p { font-size:13px; line-height:1.6; }
 .info-tile p strong { color:var(--accent); }
 
+/* ── GEAR MODAL ── */
+.modal-overlay {
+  position:fixed; inset:0; z-index:500;
+  background:rgba(0,0,0,.7); backdrop-filter:blur(6px);
+  display:flex; align-items:flex-end; justify-content:center;
+  opacity:0; pointer-events:none; transition:opacity .3s;
+}
+.modal-overlay.open { opacity:1; pointer-events:auto; }
+.modal-sheet {
+  background:var(--card); border-radius:24px 24px 0 0;
+  width:100%; max-width:430px; max-height:88vh;
+  display:flex; flex-direction:column;
+  transform:translateY(100%); transition:transform .35s cubic-bezier(.32,0,.24,1);
+  border-top:1px solid var(--border);
+}
+.modal-overlay.open .modal-sheet { transform:translateY(0); }
+.modal-handle-wrap { padding:12px 0 4px; display:flex; justify-content:center; flex-shrink:0; }
+.modal-handle { width:40px; height:4px; border-radius:2px; background:var(--border); }
+.modal-header {
+  display:flex; align-items:center; justify-content:space-between;
+  padding:0 20px 14px; flex-shrink:0; border-bottom:1px solid var(--border);
+}
+.modal-header h2 { font-size:17px; font-weight:800; }
+.modal-close {
+  width:32px; height:32px; border-radius:50%; border:1px solid var(--border);
+  background:var(--card2); color:var(--muted); font-size:16px;
+  display:flex; align-items:center; justify-content:center; cursor:pointer;
+}
+.modal-close:active { background:var(--border); }
+
+/* modal sub-tabs */
+.modal-tabs { display:flex; gap:6px; padding:12px 20px; flex-shrink:0; overflow-x:auto; scrollbar-width:none; }
+.modal-tabs::-webkit-scrollbar { display:none; }
+.mtab {
+  flex-shrink:0; font-size:12px; font-weight:700; padding:6px 14px;
+  border-radius:50px; border:1px solid var(--border); background:var(--card2);
+  color:var(--muted); cursor:pointer; transition:all .2s;
+}
+.mtab.active { background:linear-gradient(135deg,var(--green),#059669); border-color:transparent; color:#fff; }
+
+.modal-body { overflow-y:auto; padding:4px 20px 40px; flex:1; -webkit-overflow-scrolling:touch; }
+
+/* Gear components */
+.gear-section-label { font-size:11px; font-weight:700; color:var(--accent); text-transform:uppercase; letter-spacing:1px; margin:16px 0 8px; }
+.gear-cards { display:flex; flex-direction:column; gap:8px; }
+.gear-card { background:var(--card2); border:1px solid var(--border); border-radius:14px; padding:12px 14px; }
+.gear-card.highlight { background:rgba(79,142,247,.07); border-color:rgba(79,142,247,.3); }
+.gear-card-head { display:flex; align-items:center; gap:8px; flex-wrap:wrap; margin-bottom:4px; }
+.gear-name { font-size:14px; font-weight:700; color:var(--text); }
+.gear-tag { font-size:10px; padding:2px 8px; border-radius:50px; font-weight:600; }
+.gear-tag.good { background:rgba(16,185,129,.15); color:var(--green); border:1px solid rgba(16,185,129,.3); }
+.gear-tag.warn { background:rgba(245,158,11,.15); color:var(--orange); border:1px solid rgba(245,158,11,.3); }
+.gear-tag.best { background:rgba(79,142,247,.15); color:var(--accent); border:1px solid rgba(79,142,247,.3); }
+.gear-desc { font-size:12px; color:var(--muted); line-height:1.5; }
+.gear-points { display:flex; flex-wrap:wrap; gap:5px; margin-top:7px; }
+.gear-points span { font-size:11px; background:var(--card); border:1px solid var(--border); color:var(--muted); padding:2px 8px; border-radius:50px; }
+.flex-bar-wrap { margin-bottom:4px; }
+.flex-bar { display:flex; border-radius:12px; overflow:hidden; border:1px solid var(--border); }
+.flex-seg { flex:1; padding:10px 6px; text-align:center; font-size:11px; font-weight:700; color:var(--muted); background:var(--card2); display:flex; flex-direction:column; gap:4px; }
+.flex-seg span { font-size:9px; font-weight:400; color:var(--muted); line-height:1.3; }
+.flex-seg.soft,.flex-seg.mid { border-right:1px solid var(--border); }
+.flex-seg.active-flex { background:linear-gradient(135deg,rgba(79,142,247,.2),rgba(124,92,252,.2)); color:var(--accent); }
+.flex-seg.active-flex span { color:var(--accent); opacity:.8; }
+.gear-tip { font-size:12px; color:var(--muted); margin-top:7px; }
+.gear-tip strong { color:var(--text); }
+.terrain-row { display:flex; gap:8px; }
+.terrain-chip { flex:1; background:var(--card2); border:1px solid var(--border); border-radius:12px; padding:10px 6px; text-align:center; font-size:12px; font-weight:700; color:var(--muted); display:flex; flex-direction:column; gap:4px; }
+.terrain-chip span { font-size:10px; font-weight:400; }
+.terrain-chip.active-terrain { background:rgba(79,142,247,.1); border-color:rgba(79,142,247,.35); color:var(--accent); }
+.terrain-chip.active-terrain span { color:var(--accent); opacity:.8; }
+.tag-list { display:flex; flex-wrap:wrap; gap:6px; }
+.tag-list span { font-size:12px; background:var(--card2); border:1px solid var(--border); color:var(--text); padding:5px 11px; border-radius:50px; }
+.gear-highlight-box { margin-top:12px; padding:12px 16px; background:rgba(245,158,11,.08); border:1px solid rgba(245,158,11,.3); border-radius:12px; font-size:13px; font-weight:700; color:var(--orange); text-align:center; }
+
+/* ── Gear FAB ── */
+.gear-fab {
+  position:fixed; bottom:88px; right:20px; z-index:300;
+  width:52px; height:52px; border-radius:50%; border:none; cursor:pointer;
+  background:linear-gradient(135deg,#10b981,#059669);
+  color:#fff; font-size:22px;
+  display:flex; align-items:center; justify-content:center;
+  box-shadow:0 4px 20px rgba(16,185,129,.45);
+  transition:transform .2s, opacity .2s;
+  opacity:1; pointer-events:auto;
+}
+.gear-fab:active { transform:scale(.92); }
+
 /* Nav arrows */
-.nav-arrows {
-  position:fixed; bottom:24px; left:50%; transform:translateX(-50%);
-  display:flex; gap:10px; z-index:200;
-}
-.nav-arrow {
-  width:48px;height:48px;border-radius:50%;border:none;cursor:pointer;
-  font-size:18px;display:flex;align-items:center;justify-content:center;
-  transition:all .2s; box-shadow:0 4px 20px rgba(0,0,0,.4);
-}
+.nav-arrows { position:fixed; bottom:24px; left:50%; transform:translateX(-50%); display:flex; gap:10px; z-index:200; }
+.nav-arrow { width:48px;height:48px;border-radius:50%;border:none;cursor:pointer;font-size:18px;display:flex;align-items:center;justify-content:center;transition:all .2s;box-shadow:0 4px 20px rgba(0,0,0,.4); }
 .nav-arrow.prev { background:var(--card2); color:var(--muted); border:1px solid var(--border); }
 .nav-arrow.next { background:linear-gradient(135deg,var(--accent),var(--accent2)); color:#fff; }
 .nav-arrow:disabled { opacity:.3; pointer-events:none; }
@@ -243,14 +275,9 @@ body { background:var(--bg); color:var(--text); font-family:'Segoe UI',system-ui
   <div class="day-head">
     <div class="day-head-top">
       <div class="day-num-badge"><div class="dn">INFO</div><div class="dd">📋</div></div>
-      <div class="day-head-text">
-        <h2>行前準備資訊</h2>
-        <p>虎航 · 行李 · 入境 · 待辦</p>
-      </div>
+      <div class="day-head-text"><h2>行前準備資訊</h2><p>虎航 · 行李 · 入境 · 待辦</p></div>
     </div>
-    <div class="day-pills">
-      <span class="pill">✈️ 虎航</span><span class="pill ski">⛷️ 5天滑雪</span><span class="pill hotel">🏨 6間住宿</span>
-    </div>
+    <div class="day-pills"><span class="pill">✈️ 虎航</span><span class="pill ski">⛷️ 5天滑雪</span><span class="pill hotel">🏨 6間住宿</span></div>
   </div>
   <div class="sec-label">✈️ 行李規定</div>
   <div class="info-grid">
@@ -280,18 +307,14 @@ body { background:var(--bg); color:var(--text); font-family:'Segoe UI',system-ui
   </div>
 </div>
 
-<!-- PAGE 1: D1 -->
+<!-- PAGE 1 -->
 <div class="page" id="page-1">
   <div class="day-head">
     <div class="day-head-top">
       <div class="day-num-badge"><div class="dn">DAY</div><div class="dd">1</div></div>
       <div class="day-head-text"><h2>台北 → 仙台</h2><p>3/8 (日) · 出發日</p></div>
     </div>
-    <div class="day-pills">
-      <span class="pill">✈️ IT254 虎航</span>
-      <span class="pill food">🍖 たんや善治郎</span>
-      <span class="pill hotel">🏨 東横INN仙台</span>
-    </div>
+    <div class="day-pills"><span class="pill">✈️ IT254 虎航</span><span class="pill food">🍖 たんや善治郎</span><span class="pill hotel">🏨 東横INN仙台</span></div>
   </div>
   <div class="sec-label">🗓️ 行程時刻</div>
   <div class="timeline">
@@ -316,18 +339,14 @@ body { background:var(--bg); color:var(--text); font-family:'Segoe UI',system-ui
   </div>
 </div>
 
-<!-- PAGE 2: D2 -->
+<!-- PAGE 2 -->
 <div class="page" id="page-2">
   <div class="day-head">
     <div class="day-head-top">
       <div class="day-num-badge"><div class="dn">DAY</div><div class="dd">2</div></div>
       <div class="day-head-text"><h2>仙台 → 藏王溫泉</h2><p>3/9 (一) · 首日滑雪</p></div>
     </div>
-    <div class="day-pills">
-      <span class="pill ski">⛷️ 上の台ゲレンデ</span>
-      <span class="pill">🚌 高速巴士</span>
-      <span class="pill hotel">♨️ 五感の湯つるや</span>
-    </div>
+    <div class="day-pills"><span class="pill ski">⛷️ 上の台ゲレンデ</span><span class="pill">🚌 高速巴士</span><span class="pill hotel">♨️ 五感の湯つるや</span></div>
   </div>
   <div class="sec-label">🗓️ 行程時刻</div>
   <div class="timeline">
@@ -355,7 +374,7 @@ body { background:var(--bg); color:var(--text); font-family:'Segoe UI',system-ui
   </div>
 </div>
 
-<!-- PAGE 3: D3 -->
+<!-- PAGE 3 -->
 <div class="page" id="page-3">
   <div class="day-head">
     <div class="day-head-top">
@@ -375,7 +394,7 @@ body { background:var(--bg); color:var(--text); font-family:'Segoe UI',system-ui
   </div>
 </div>
 
-<!-- PAGE 4: D4 -->
+<!-- PAGE 4 -->
 <div class="page" id="page-4">
   <div class="day-head">
     <div class="day-head-top">
@@ -397,7 +416,7 @@ body { background:var(--bg); color:var(--text); font-family:'Segoe UI',system-ui
   </div>
 </div>
 
-<!-- PAGE 5: D5 -->
+<!-- PAGE 5 -->
 <div class="page" id="page-5">
   <div class="day-head">
     <div class="day-head-top">
@@ -416,18 +435,14 @@ body { background:var(--bg); color:var(--text); font-family:'Segoe UI',system-ui
   </div>
 </div>
 
-<!-- PAGE 6: D6 -->
+<!-- PAGE 6 -->
 <div class="page" id="page-6">
   <div class="day-head">
     <div class="day-head-top">
       <div class="day-num-badge"><div class="dn">DAY</div><div class="dd">6</div></div>
       <div class="day-head-text"><h2>藏王溫泉 → 山形</h2><p>3/13 (五) · 最後滑雪＋移動</p></div>
     </div>
-    <div class="day-pills">
-      <span class="pill ski">⛷️ 中央ゲレンデ</span>
-      <span class="pill food">🍖 けむすけ</span>
-      <span class="pill hotel">🏨 Richmond Hotel</span>
-    </div>
+    <div class="day-pills"><span class="pill ski">⛷️ 中央ゲレンデ</span><span class="pill food">🍖 けむすけ</span><span class="pill hotel">🏨 Richmond Hotel</span></div>
   </div>
   <div class="sec-label">🗓️ 行程時刻</div>
   <div class="timeline">
@@ -451,17 +466,14 @@ body { background:var(--bg); color:var(--text); font-family:'Segoe UI',system-ui
   </div>
 </div>
 
-<!-- PAGE 7: D7 -->
+<!-- PAGE 7 -->
 <div class="page" id="page-7">
   <div class="day-head">
     <div class="day-head-top">
       <div class="day-num-badge"><div class="dn">DAY</div><div class="dd">7</div></div>
       <div class="day-head-text"><h2>山形 → 仙台</h2><p>3/14 (六) · 山寺 · 山形城</p></div>
     </div>
-    <div class="day-pills">
-      <span class="pill">🏔️ 山寺</span><span class="pill">🏯 山形城</span>
-      <span class="pill food">🍜 続おそばに</span><span class="pill hotel">🏨 東横INN仙台</span>
-    </div>
+    <div class="day-pills"><span class="pill">🏔️ 山寺</span><span class="pill">🏯 山形城</span><span class="pill food">🍜 続おそばに</span><span class="pill hotel">🏨 東横INN仙台</span></div>
   </div>
   <div class="sec-label">🗓️ 行程時刻</div>
   <div class="timeline">
@@ -495,17 +507,14 @@ body { background:var(--bg); color:var(--text); font-family:'Segoe UI',system-ui
   </div>
 </div>
 
-<!-- PAGE 8: D8 -->
+<!-- PAGE 8 -->
 <div class="page" id="page-8">
   <div class="day-head">
     <div class="day-head-top">
       <div class="day-num-badge"><div class="dn">DAY</div><div class="dd">8</div></div>
       <div class="day-head-text"><h2>仙台 → 磐梯山</h2><p>3/15 (日) · 松島遊覽</p></div>
     </div>
-    <div class="day-pills">
-      <span class="pill">🌊 松島遊覽船</span><span class="pill food">🦪 牡蠣午餐</span>
-      <span class="pill">🚅 新幹線</span><span class="pill hotel">♨️ 磐梯山温泉ホテル</span>
-    </div>
+    <div class="day-pills"><span class="pill">🌊 松島遊覽船</span><span class="pill food">🦪 牡蠣午餐</span><span class="pill">🚅 新幹線</span><span class="pill hotel">♨️ 磐梯山温泉ホテル</span></div>
   </div>
   <div class="sec-label">🗓️ 行程時刻</div>
   <div class="timeline">
@@ -529,7 +538,7 @@ body { background:var(--bg); color:var(--text); font-family:'Segoe UI',system-ui
   </div>
 </div>
 
-<!-- PAGE 9: D9 -->
+<!-- PAGE 9 -->
 <div class="page" id="page-9">
   <div class="day-head">
     <div class="day-head-top">
@@ -548,7 +557,7 @@ body { background:var(--bg); color:var(--text); font-family:'Segoe UI',system-ui
   </div>
 </div>
 
-<!-- PAGE 10: D10 -->
+<!-- PAGE 10 -->
 <div class="page" id="page-10">
   <div class="day-head">
     <div class="day-head-top">
@@ -572,7 +581,7 @@ body { background:var(--bg); color:var(--text); font-family:'Segoe UI',system-ui
   </div>
 </div>
 
-<!-- PAGE 11: D11 -->
+<!-- PAGE 11 -->
 <div class="page" id="page-11">
   <div class="day-head">
     <div class="day-head-top">
@@ -585,7 +594,7 @@ body { background:var(--bg); color:var(--text); font-family:'Segoe UI',system-ui
   <div class="tl-note" style="border-radius:12px;padding:16px;font-size:14px;color:var(--text);">詳細行程由 Fam 安排，待確認。</div>
 </div>
 
-<!-- PAGE 12: D12 -->
+<!-- PAGE 12 -->
 <div class="page" id="page-12">
   <div class="day-head">
     <div class="day-head-top">
@@ -607,7 +616,7 @@ body { background:var(--bg); color:var(--text); font-family:'Segoe UI',system-ui
   </div>
 </div>
 
-<!-- PAGE 13: D13 -->
+<!-- PAGE 13 -->
 <div class="page" id="page-13">
   <div class="day-head">
     <div class="day-head-top">
@@ -638,6 +647,122 @@ body { background:var(--bg); color:var(--text); font-family:'Segoe UI',system-ui
 </div>
 
 </div><!-- /pages -->
+
+<!-- GEAR MODAL -->
+<div class="modal-overlay" id="gearModal" onclick="closeModalOutside(event)">
+  <div class="modal-sheet" id="gearSheet">
+    <div class="modal-handle-wrap"><div class="modal-handle"></div></div>
+    <div class="modal-header">
+      <h2>🏂 雪板裝備指南</h2>
+      <button class="modal-close" onclick="closeModal()">✕</button>
+    </div>
+    <!-- Sub-tabs -->
+    <div class="modal-tabs">
+      <button class="mtab active" onclick="switchMTab(0,this)">🏂 雪板</button>
+      <button class="mtab" onclick="switchMTab(1,this)">🔩 Binding</button>
+      <button class="mtab" onclick="switchMTab(2,this)">👟 雪鞋</button>
+    </div>
+    <div class="modal-body" id="modalBody">
+
+      <!-- 雪板 panel -->
+      <div class="mpanel" id="mpanel-0">
+        <div class="gear-section-label">1️⃣ 板型 / 底型（最重要）</div>
+        <div class="gear-cards">
+          <div class="gear-card"><div class="gear-card-head"><span class="gear-name">Camber</span><span class="gear-tag warn">新手易卡刃</span></div><p class="gear-desc">傳統弧形，中間拱起、兩端貼地</p><div class="gear-points"><span>刻滑穩</span><span>反應快</span></div></div>
+          <div class="gear-card"><div class="gear-card-head"><span class="gear-name">Rocker</span><span class="gear-tag good">新手友善</span></div><p class="gear-desc">中間抬起、兩端貼地（Banana）</p><div class="gear-points"><span>容錯高</span><span>好轉彎</span></div></div>
+          <div class="gear-card"><div class="gear-card-head"><span class="gear-name">Flat</span></div><p class="gear-desc">中間平、兩端微抬</p><div class="gear-points"><span>穩定</span><span>容錯折衷</span></div></div>
+          <div class="gear-card highlight"><div class="gear-card-head"><span class="gear-name">Hybrid Camber</span><span class="gear-tag best">新手～中階首選</span></div><p class="gear-desc">中間 Camber + 頭尾 Rocker，全山最萬用</p><div class="gear-points"><span>萬用</span><span>最推薦</span></div></div>
+        </div>
+        <div class="gear-section-label">2️⃣ 板形狀（Shape）</div>
+        <div class="gear-cards">
+          <div class="gear-card"><div class="gear-card-head"><span class="gear-name">True Twin</span></div><p class="gear-desc">前後完全對稱</p><div class="gear-points"><span>Freestyle</span><span>Switch</span><span>新手練基本功</span></div></div>
+          <div class="gear-card"><div class="gear-card-head"><span class="gear-name">Directional</span></div><p class="gear-desc">有前後方向，正向滑更穩</p><div class="gear-points"><span>All Mountain 常見</span></div></div>
+          <div class="gear-card"><div class="gear-card-head"><span class="gear-name">Directional Twin</span></div><p class="gear-desc">外型像 Twin，孔位微後移</p><div class="gear-points"><span>兼顧玩與穩</span><span>很常見</span></div></div>
+        </div>
+        <div class="gear-section-label">3️⃣ 硬度 Flex（1–10）</div>
+        <div class="flex-bar-wrap">
+          <div class="flex-bar">
+            <div class="flex-seg soft">1–3<span>軟<br>初學/公園</span></div>
+            <div class="flex-seg mid active-flex">4–6<span>中 ⭐<br>全山萬用</span></div>
+            <div class="flex-seg hard">7–10<span>硬<br>高速/刻滑</span></div>
+          </div>
+          <p class="gear-tip">👉 新手建議 <strong>4–5</strong></p>
+        </div>
+        <div class="gear-section-label">4️⃣ 滑行取向（Terrain）</div>
+        <div class="terrain-row">
+          <div class="terrain-chip">🎪 Freestyle<span>玩·跳·switch</span></div>
+          <div class="terrain-chip active-terrain">🗻 All Mountain<span>全雪場</span></div>
+          <div class="terrain-chip">💨 Freeride<span>高速·粉雪</span></div>
+        </div>
+        <div class="gear-section-label">5️⃣ 安裝系統</div>
+        <div class="gear-cards">
+          <div class="gear-card highlight"><div class="gear-card-head"><span class="gear-name">4×2 / 2×4</span><span class="gear-tag good">最自由</span></div><p class="gear-desc">標準孔位，幾乎所有 binding 都能裝</p></div>
+          <div class="gear-card"><div class="gear-card-head"><span class="gear-name">Burton Channel</span><span class="gear-tag warn">需確認相容</span></div><p class="gear-desc">Burton 專用滑槽</p></div>
+        </div>
+      </div>
+
+      <!-- Binding panel -->
+      <div class="mpanel" id="mpanel-1" style="display:none">
+        <div class="gear-section-label">1️⃣ 類型</div>
+        <div class="gear-cards">
+          <div class="gear-card highlight"><div class="gear-card-head"><span class="gear-name">Two-Strap</span><span class="gear-tag good">新手首選</span></div><p class="gear-desc">雙綁帶，最標準、最穩定</p></div>
+          <div class="gear-card"><div class="gear-card-head"><span class="gear-name">Step On</span><span class="gear-tag warn">不建議新手</span></div><p class="gear-desc">免綁帶，穿脫快但限制多</p></div>
+        </div>
+        <div class="gear-section-label">2️⃣ 硬度 Flex</div>
+        <div class="flex-bar-wrap">
+          <div class="flex-bar">
+            <div class="flex-seg soft">軟<span>Park<br>新手</span></div>
+            <div class="flex-seg mid active-flex">中 ⭐<span>All Mountain</span></div>
+            <div class="flex-seg hard">硬<span>Carving<br>高速</span></div>
+          </div>
+          <p class="gear-tip">👉 配板原則：板 5 → Binding <strong>4–6</strong></p>
+        </div>
+        <div class="gear-section-label">3️⃣ 安裝相容性</div>
+        <div class="gear-cards">
+          <div class="gear-card"><div class="gear-card-head"><span class="gear-name">Disc 圓盤</span></div><p class="gear-desc">可旋轉調角度，支援 4×2 / Channel</p></div>
+          <div class="gear-card"><div class="gear-card-head"><span class="gear-name">Re:Flex（Burton）</span><span class="gear-tag good">通用</span></div><p class="gear-desc">通用系統，可裝任何板</p></div>
+          <div class="gear-card"><div class="gear-card-head"><span class="gear-name">EST（Burton）</span><span class="gear-tag warn">Channel 專用</span></div><p class="gear-desc">不能裝其他板</p></div>
+        </div>
+        <div class="gear-section-label">4️⃣ 調整項目</div>
+        <div class="tag-list">
+          <span>↗ Forward Lean</span><span>🦶 Toe Ramp</span><span>🔄 Highback Rotation</span>
+        </div>
+        <p class="gear-tip" style="margin-top:8px;">👉 新手先不用懂太深，但要「有」</p>
+        <div class="gear-section-label">5️⃣ 尺寸</div>
+        <div class="tag-list"><span>S</span><span>M</span><span>L</span><span>XL</span></div>
+        <p class="gear-tip" style="margin-top:8px;">❗ 一定依照「雪鞋尺寸」選</p>
+      </div>
+
+      <!-- 雪鞋 panel -->
+      <div class="mpanel" id="mpanel-2" style="display:none">
+        <div class="gear-section-label">1️⃣ 鞋帶系統</div>
+        <div class="gear-cards">
+          <div class="gear-card"><div class="gear-card-head"><span class="gear-name">Traditional Lace</span></div><p class="gear-desc">最精準，綁最久</p></div>
+          <div class="gear-card"><div class="gear-card-head"><span class="gear-name">BOA</span></div><p class="gear-desc">旋鈕快綁，新手最愛</p></div>
+          <div class="gear-card highlight"><div class="gear-card-head"><span class="gear-name">Dual BOA</span><span class="gear-tag good">推薦</span></div><p class="gear-desc">腳背 / 腳踝分開調，最靈活</p></div>
+        </div>
+        <div class="gear-section-label">2️⃣ 鞋子硬度 Flex</div>
+        <div class="flex-bar-wrap">
+          <div class="flex-bar">
+            <div class="flex-seg soft">軟<span>好走<br>好學</span></div>
+            <div class="flex-seg mid active-flex">中 ⭐<span>全山用<br>支撐好</span></div>
+            <div class="flex-seg hard">硬<span>刻滑<br>高速</span></div>
+          </div>
+          <p class="gear-tip">👉 新手建議 <strong>中偏軟</strong></p>
+        </div>
+        <div class="gear-section-label">3️⃣ Fit / 腳型（超關鍵）</div>
+        <div class="tag-list">
+          <span>👣 Toe Box</span><span>🔒 Heel Hold</span><span>📐 Regular / Wide</span>
+        </div>
+        <div class="gear-highlight-box">❗ 合腳比品牌重要 100 倍</div>
+      </div>
+
+    </div><!-- /modal-body -->
+  </div>
+</div>
+
+<!-- GEAR FAB -->
+<button class="gear-fab" id="gearFab" onclick="openModal()">🏂</button>
 
 <!-- NAV ARROWS -->
 <div class="nav-arrows">
@@ -687,11 +812,47 @@ body { background:var(--bg); color:var(--text); font-family:'Segoe UI',system-ui
     }
   }
 
-  // Page swipe — only trigger if horizontal drag > vertical drag
+  // Modal
+  function openModal() {
+    document.getElementById('gearModal').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeModal() {
+    document.getElementById('gearModal').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+  function closeModalOutside(e) {
+    if (e.target === document.getElementById('gearModal')) closeModal();
+  }
+
+  // Modal swipe-down to close
+  const sheet = document.getElementById('gearSheet');
+  let sheetStartY = 0, sheetDragging = false;
+  sheet.addEventListener('touchstart', e => { sheetStartY = e.touches[0].clientY; sheetDragging = true; }, {passive:true});
+  sheet.addEventListener('touchmove', e => {
+    if (!sheetDragging) return;
+    const dy = e.touches[0].clientY - sheetStartY;
+    if (dy > 0) sheet.style.transform = `translateY(${dy}px)`;
+  }, {passive:true});
+  sheet.addEventListener('touchend', e => {
+    const dy = e.changedTouches[0].clientY - sheetStartY;
+    sheet.style.transform = '';
+    if (dy > 80) closeModal();
+    sheetDragging = false;
+  });
+
+  // Modal sub-tabs
+  function switchMTab(idx, btn) {
+    document.querySelectorAll('.mtab').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    document.querySelectorAll('.mpanel').forEach((p,i) => p.style.display = i===idx ? 'block' : 'none');
+    document.getElementById('modalBody').scrollTop = 0;
+  }
+
+  // Page swipe
   let startX = 0, startY = 0;
   document.querySelector('.pages').addEventListener('touchstart', e => {
-    startX = e.touches[0].clientX;
-    startY = e.touches[0].clientY;
+    startX = e.touches[0].clientX; startY = e.touches[0].clientY;
   }, {passive:true});
   document.querySelector('.pages').addEventListener('touchend', e => {
     const dx = e.changedTouches[0].clientX - startX;
@@ -699,26 +860,12 @@ body { background:var(--bg); color:var(--text); font-family:'Segoe UI',system-ui
     if (Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy) * 1.5) changeDay(dx < 0 ? 1 : -1);
   }, {passive:true});
 
-  // Tab bar drag scroll (mouse only, touch handled natively)
+  // Tab bar mouse drag
   const tabBar = document.getElementById('tabsScroll');
   let tabDragging = false, tabStartX = 0, tabScrollLeft = 0;
-
-  tabBar.addEventListener('mousedown', e => {
-    tabDragging = true;
-    tabBar.style.cursor = 'grabbing';
-    tabStartX = e.pageX - tabBar.offsetLeft;
-    tabScrollLeft = tabBar.scrollLeft;
-  });
-  document.addEventListener('mouseup', () => {
-    tabDragging = false;
-    tabBar.style.cursor = '';
-  });
-  document.addEventListener('mousemove', e => {
-    if (!tabDragging) return;
-    e.preventDefault();
-    const x = e.pageX - tabBar.offsetLeft;
-    tabBar.scrollLeft = tabScrollLeft - (x - tabStartX);
-  });
+  tabBar.addEventListener('mousedown', e => { tabDragging = true; tabBar.style.cursor='grabbing'; tabStartX = e.pageX - tabBar.offsetLeft; tabScrollLeft = tabBar.scrollLeft; });
+  document.addEventListener('mouseup', () => { tabDragging = false; tabBar.style.cursor=''; });
+  document.addEventListener('mousemove', e => { if (!tabDragging) return; e.preventDefault(); tabBar.scrollLeft = tabScrollLeft - (e.pageX - tabBar.offsetLeft - tabStartX); });
 
   updateArrows();
 </script>
