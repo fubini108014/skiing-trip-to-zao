@@ -684,12 +684,16 @@ body { background:var(--bg); color:var(--text); font-family:'Segoe UI',system-ui
     }
   }
 
-  // Page swipe
-  let startX = 0;
-  document.querySelector('.pages').addEventListener('touchstart', e => startX = e.touches[0].clientX, {passive:true});
+  // Page swipe — only trigger if horizontal drag > vertical drag
+  let startX = 0, startY = 0;
+  document.querySelector('.pages').addEventListener('touchstart', e => {
+    startX = e.touches[0].clientX;
+    startY = e.touches[0].clientY;
+  }, {passive:true});
   document.querySelector('.pages').addEventListener('touchend', e => {
     const dx = e.changedTouches[0].clientX - startX;
-    if (Math.abs(dx) > 50) changeDay(dx < 0 ? 1 : -1);
+    const dy = e.changedTouches[0].clientY - startY;
+    if (Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy) * 1.5) changeDay(dx < 0 ? 1 : -1);
   }, {passive:true});
 
   // Tab bar drag scroll
