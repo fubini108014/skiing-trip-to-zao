@@ -1,0 +1,736 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>2026 藏王滑雪</title>
+<style>
+* { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
+:root {
+  --bg:#0a0e1a; --card:#111827; --card2:#162032;
+  --accent:#4f8ef7; --accent2:#7c5cfc;
+  --green:#10b981; --orange:#f59e0b;
+  --text:#e2e8f0; --muted:#64748b; --border:#1e2d45;
+}
+html { scroll-behavior:smooth; }
+body { background:var(--bg); color:var(--text); font-family:'Segoe UI',system-ui,sans-serif; max-width:430px; margin:0 auto; min-height:100vh; overflow-x:hidden; }
+
+/* ── HERO ── */
+.hero {
+  background:linear-gradient(160deg,#0f1f3d 0%,#0a0e1a 100%);
+  padding:12px 16px 10px; position:relative; overflow:hidden;
+}
+.hero::before {
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(ellipse at 50% -10%,rgba(79,142,247,.22) 0%,transparent 65%);
+}
+.hero-stat {
+  background:rgba(255,255,255,.05); border:1px solid var(--border);
+  border-radius:10px; padding:5px 10px; text-align:center;
+}
+.hero-stat .val { font-size:13px; font-weight:800; color:var(--accent); }
+.hero-stat .lbl { font-size:9px; color:var(--muted); margin-top:1px; letter-spacing:.5px; }
+
+/* ── DAY TABS SCROLLER ── */
+.tabs-wrap {
+  position:sticky; top:0; z-index:100;
+  background:rgba(10,14,26,.92); backdrop-filter:blur(12px);
+  border-bottom:1px solid var(--border);
+  padding:10px 0 0;
+}
+.tabs-scroll {
+  display:flex; gap:6px; overflow-x:auto; padding:0 16px 10px;
+  scrollbar-width:none;
+}
+.tabs-scroll::-webkit-scrollbar { display:none; }
+.tab-btn {
+  flex-shrink:0; border:1px solid var(--border); background:var(--card2);
+  color:var(--muted); border-radius:10px; padding:7px 12px;
+  font-size:12px; font-weight:600; cursor:pointer; transition:all .2s;
+  text-align:center; min-width:52px;
+}
+.tab-btn .date { font-size:10px; display:block; color:var(--muted); margin-top:1px; }
+.tab-btn.active {
+  background:linear-gradient(135deg,var(--accent),var(--accent2));
+  border-color:transparent; color:#fff;
+}
+.tab-btn.active .date { color:rgba(255,255,255,.7); }
+
+/* ── CONTENT ── */
+.pages { position:relative; }
+.page { display:none; padding:20px 16px 100px; animation:fadeIn .25s ease; }
+.page.active { display:block; }
+@keyframes fadeIn { from{opacity:0;transform:translateY(6px)} to{opacity:1;transform:translateY(0)} }
+
+/* Day Header Card */
+.day-head {
+  background:linear-gradient(135deg,var(--card2),var(--card));
+  border:1px solid var(--border); border-radius:20px;
+  padding:18px; margin-bottom:16px; position:relative; overflow:hidden;
+}
+.day-head::before {
+  content:'';position:absolute;top:-20px;right:-20px;
+  width:100px;height:100px;
+  background:radial-gradient(circle,rgba(79,142,247,.12),transparent 70%);
+}
+.day-head-top { display:flex; align-items:center; gap:14px; }
+.day-num-badge {
+  width:50px;height:50px;border-radius:14px;flex-shrink:0;
+  background:linear-gradient(135deg,var(--accent),var(--accent2));
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  font-weight:900;
+}
+.day-num-badge .dn { font-size:10px; opacity:.8; }
+.day-num-badge .dd { font-size:20px; line-height:1; }
+.day-head-text h2 { font-size:16px; font-weight:800; line-height:1.3; }
+.day-head-text p { font-size:12px; color:var(--muted); margin-top:3px; }
+.day-pills { display:flex; flex-wrap:wrap; gap:5px; margin-top:12px; }
+.pill {
+  font-size:10px; padding:3px 10px; border-radius:50px; font-weight:600;
+  background:rgba(79,142,247,.12); color:var(--accent); border:1px solid rgba(79,142,247,.2);
+}
+.pill.hotel { background:rgba(124,92,252,.12); color:#a78bfa; border-color:rgba(124,92,252,.2); }
+.pill.food  { background:rgba(245,158,11,.12); color:var(--orange); border-color:rgba(245,158,11,.2); }
+.pill.ski   { background:rgba(16,185,129,.12); color:var(--green); border-color:rgba(16,185,129,.2); }
+.pill.red   { background:rgba(239,68,68,.12); color:#f87171; border-color:rgba(239,68,68,.2); }
+
+/* Section Label */
+.sec-label {
+  font-size:10px;text-transform:uppercase;letter-spacing:1.5px;
+  color:var(--muted);margin:18px 0 10px;padding-bottom:6px;
+  border-bottom:1px solid var(--border);
+}
+
+/* Flight Card */
+.flight-card {
+  background:linear-gradient(135deg,rgba(79,142,247,.1),rgba(124,92,252,.1));
+  border:1px solid rgba(79,142,247,.25); border-radius:14px;
+  padding:14px 16px; display:flex; align-items:center; justify-content:space-between;
+  margin:10px 0;
+}
+.flight-city { font-weight:800; font-size:18px; }
+.flight-time { font-size:11px; color:var(--muted); margin-top:2px; }
+.flight-mid { text-align:center; }
+.flight-mid .arr { font-size:18px; }
+.flight-mid .code { font-size:10px; color:var(--muted); margin-top:4px; }
+
+/* Timeline */
+.timeline { position:relative; padding-left:26px; }
+.timeline::before {
+  content:'';position:absolute;left:7px;top:4px;bottom:4px;
+  width:2px;border-radius:2px;
+  background:linear-gradient(180deg,var(--accent),var(--accent2),rgba(124,92,252,.1));
+}
+.tl-item { position:relative; margin-bottom:18px; }
+.tl-dot {
+  position:absolute;left:-22px;top:4px;
+  width:10px;height:10px;border-radius:50%;
+  background:var(--accent);border:2px solid var(--bg);
+  box-shadow:0 0 8px rgba(79,142,247,.5);
+}
+.tl-dot.green { background:var(--green); box-shadow:0 0 8px rgba(16,185,129,.5); }
+.tl-dot.purple { background:var(--accent2); box-shadow:0 0 8px rgba(124,92,252,.5); }
+.tl-time { font-size:10px; font-weight:700; color:var(--accent); letter-spacing:.5px; }
+.tl-title { font-size:14px; font-weight:600; margin-top:2px; line-height:1.4; }
+.tl-sub { font-size:12px; color:var(--muted); margin-top:3px; line-height:1.5; }
+.tl-note {
+  background:var(--card2); border-left:3px solid var(--accent2);
+  border-radius:0 8px 8px 0; padding:8px 10px; margin-top:7px;
+  font-size:12px; color:var(--muted); line-height:1.5;
+}
+
+/* ── Checklist ── */
+.check-list { display:flex; flex-direction:column; gap:6px; }
+.check-item {
+  display:flex; align-items:center; gap:10px;
+  padding:9px 12px; border-radius:12px;
+  background:var(--card2); border:1px solid var(--border);
+  cursor:pointer; transition:background .15s, border-color .15s;
+  user-select:none;
+}
+.check-item.is-done { background:rgba(16,185,129,.06); border-color:rgba(16,185,129,.2); }
+.check-item:active { transform:scale(.98); }
+.cb {
+  width:20px; height:20px; border-radius:6px; flex-shrink:0;
+  display:flex; align-items:center; justify-content:center;
+  transition:all .2s; position:relative; box-sizing:border-box;
+}
+.cb.todo { border:2px solid var(--border); background:transparent; }
+.cb.done {
+  background:var(--green); border:2px solid var(--green);
+  box-shadow:0 0 8px rgba(16,185,129,.35);
+}
+.cb.done::after {
+  content:'';
+  width:5px; height:9px;
+  border-right:2.5px solid #fff; border-bottom:2.5px solid #fff;
+  transform:rotate(45deg) translate(-1px,-1px);
+  display:block;
+}
+.check-text { font-size:13px; line-height:1.4; flex:1; transition:color .15s; }
+.check-text.done { text-decoration:line-through; color:var(--muted); }
+.check-text.todo { color:var(--text); }
+
+/* Info grid */
+.info-grid { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+.info-tile {
+  background:var(--card2); border:1px solid var(--border); border-radius:14px; padding:14px;
+}
+.info-tile h4 { font-size:10px; text-transform:uppercase; letter-spacing:1px; color:var(--muted); margin-bottom:8px; }
+.info-tile p { font-size:13px; line-height:1.6; }
+.info-tile p strong { color:var(--accent); }
+
+/* Nav arrows */
+.nav-arrows {
+  position:fixed; bottom:24px; left:50%; transform:translateX(-50%);
+  display:flex; gap:10px; z-index:200;
+}
+.nav-arrow {
+  width:48px;height:48px;border-radius:50%;border:none;cursor:pointer;
+  font-size:18px;display:flex;align-items:center;justify-content:center;
+  transition:all .2s; box-shadow:0 4px 20px rgba(0,0,0,.4);
+}
+.nav-arrow.prev { background:var(--card2); color:var(--muted); border:1px solid var(--border); }
+.nav-arrow.next { background:linear-gradient(135deg,var(--accent),var(--accent2)); color:#fff; }
+.nav-arrow:disabled { opacity:.3; pointer-events:none; }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero">
+  <div style="display:flex;align-items:center;justify-content:center;gap:10px;flex-wrap:wrap;position:relative;">
+    <div>
+      <div style="font-size:11px;color:var(--accent);letter-spacing:1px;margin-bottom:2px;">⛷️ 2026 Winter Trip</div>
+      <h1 style="font-size:1.4rem;font-weight:900;letter-spacing:-0.5px;line-height:1.1;">藏王<span style="background:linear-gradient(90deg,var(--accent),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;">滑雪</span>之旅</h1>
+      <p style="font-size:10px;color:var(--muted);margin-top:2px;">仙台 · 藏王 · 山形 · 磐梯山 · 豬苗代</p>
+    </div>
+    <div style="display:flex;gap:5px;flex-wrap:wrap;justify-content:center;">
+      <div class="hero-stat"><div class="val">13天</div><div class="lbl">行程</div></div>
+      <div class="hero-stat"><div class="val">5日</div><div class="lbl">滑雪</div></div>
+      <div class="hero-stat"><div class="val">3/8→3/20</div><div class="lbl">IT254 / IT753</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- TABS -->
+<div class="tabs-wrap">
+  <div class="tabs-scroll" id="tabsScroll">
+    <button class="tab-btn active" onclick="gotoDay(0)">資訊<span class="date">行前</span></button>
+    <button class="tab-btn" onclick="gotoDay(1)">D1<span class="date">3/8</span></button>
+    <button class="tab-btn" onclick="gotoDay(2)">D2<span class="date">3/9</span></button>
+    <button class="tab-btn" onclick="gotoDay(3)">D3<span class="date">3/10</span></button>
+    <button class="tab-btn" onclick="gotoDay(4)">D4<span class="date">3/11</span></button>
+    <button class="tab-btn" onclick="gotoDay(5)">D5<span class="date">3/12</span></button>
+    <button class="tab-btn" onclick="gotoDay(6)">D6<span class="date">3/13</span></button>
+    <button class="tab-btn" onclick="gotoDay(7)">D7<span class="date">3/14</span></button>
+    <button class="tab-btn" onclick="gotoDay(8)">D8<span class="date">3/15</span></button>
+    <button class="tab-btn" onclick="gotoDay(9)">D9<span class="date">3/16</span></button>
+    <button class="tab-btn" onclick="gotoDay(10)">D10<span class="date">3/17</span></button>
+    <button class="tab-btn" onclick="gotoDay(11)">D11<span class="date">3/18</span></button>
+    <button class="tab-btn" onclick="gotoDay(12)">D12<span class="date">3/19</span></button>
+    <button class="tab-btn" onclick="gotoDay(13)">D13<span class="date">3/20</span></button>
+  </div>
+</div>
+
+<div class="pages">
+
+<!-- PAGE 0 -->
+<div class="page active" id="page-0">
+  <div class="day-head">
+    <div class="day-head-top">
+      <div class="day-num-badge"><div class="dn">INFO</div><div class="dd">📋</div></div>
+      <div class="day-head-text">
+        <h2>行前準備資訊</h2>
+        <p>虎航 · 行李 · 入境 · 待辦</p>
+      </div>
+    </div>
+    <div class="day-pills">
+      <span class="pill">✈️ 虎航</span><span class="pill ski">⛷️ 5天滑雪</span><span class="pill hotel">🏨 6間住宿</span>
+    </div>
+  </div>
+  <div class="sec-label">✈️ 行李規定</div>
+  <div class="info-grid">
+    <div class="info-tile"><h4>隨身行李</h4><p>限 <strong>2件</strong><br>合計 <strong>≤10KG</strong><br>手提 54×38×23cm</p></div>
+    <div class="info-tile"><h4>托運行李</h4><p>來回均 <strong>20KG</strong><br>出發前 <strong>2.5小時</strong> 開櫃</p></div>
+    <div class="info-tile"><h4>網路</h4><p>15天 12G<br><strong>NT$988</strong></p></div>
+    <div class="info-tile"><h4>入境流程</h4><p>VJW QR Code<br>指紋+瞳孔辨識</p></div>
+  </div>
+  <div class="sec-label">📦 行李清單</div>
+  <div class="check-list">
+    <div class="check-item" onclick="toggleCheck(this)"><div class="cb todo"></div><span class="check-text todo">雪衣、雪褲</span></div>
+    <div class="check-item" onclick="toggleCheck(this)"><div class="cb todo"></div><span class="check-text todo">滑雪內衣 ×5、保暖褲 ×2</span></div>
+    <div class="check-item" onclick="toggleCheck(this)"><div class="cb todo"></div><span class="check-text todo">長襪 ×4、觀光上衣 ×3、褲子 ×2</span></div>
+    <div class="check-item" onclick="toggleCheck(this)"><div class="cb todo"></div><span class="check-text todo">睡衣 ×2、睡褲 ×1、內褲 ×7</span></div>
+    <div class="check-item" onclick="toggleCheck(this)"><div class="cb todo"></div><span class="check-text todo">護膝、護肘、護屁股</span></div>
+    <div class="check-item" onclick="toggleCheck(this)"><div class="cb todo"></div><span class="check-text todo">面罩、安全帽、雪鏡</span></div>
+    <div class="check-item" onclick="toggleCheck(this)"><div class="cb todo"></div><span class="check-text todo">手套 ×2、人工淚液、耳塞</span></div>
+  </div>
+  <div class="sec-label">✅ 規劃者待辦</div>
+  <div class="check-list">
+    <div class="check-item is-done" onclick="toggleCheck(this)"><div class="cb done"></div><span class="check-text done">確認行李寄放（Jeeper）</span></div>
+    <div class="check-item is-done" onclick="toggleCheck(this)"><div class="cb done"></div><span class="check-text done">確認飯店預定</span></div>
+    <div class="check-item is-done" onclick="toggleCheck(this)"><div class="cb done"></div><span class="check-text done">確認 VJW 申請</span></div>
+    <div class="check-item is-done" onclick="toggleCheck(this)"><div class="cb done"></div><span class="check-text done">檢查交通卡</span></div>
+    <div class="check-item" onclick="toggleCheck(this)"><div class="cb todo"></div><span class="check-text todo">列印飯店、餐廳、機票、車票資訊</span></div>
+    <div class="check-item" onclick="toggleCheck(this)"><div class="cb todo"></div><span class="check-text todo">確認保險</span></div>
+  </div>
+</div>
+
+<!-- PAGE 1: D1 -->
+<div class="page" id="page-1">
+  <div class="day-head">
+    <div class="day-head-top">
+      <div class="day-num-badge"><div class="dn">DAY</div><div class="dd">1</div></div>
+      <div class="day-head-text"><h2>台北 → 仙台</h2><p>3/8 (日) · 出發日</p></div>
+    </div>
+    <div class="day-pills">
+      <span class="pill">✈️ IT254 虎航</span>
+      <span class="pill food">🍖 たんや善治郎</span>
+      <span class="pill hotel">🏨 東横INN仙台</span>
+    </div>
+  </div>
+  <div class="sec-label">🗓️ 行程時刻</div>
+  <div class="timeline">
+    <div class="tl-item"><div class="tl-dot"></div><div class="tl-time">10:10</div><div class="tl-title">🚌 搭大有巴士出發</div><div class="tl-sub">七張站 → 桃園機場第一航廈（1968）</div></div>
+    <div class="tl-item"><div class="tl-dot green"></div><div class="tl-time">12:00</div><div class="tl-title">📍 桃園機場集合</div><div class="tl-sub">第一航廈</div></div>
+    <div class="tl-item">
+      <div class="tl-dot purple"></div><div class="tl-time">14:35</div><div class="tl-title">✈️ 起飛</div>
+      <div class="flight-card">
+        <div><div class="flight-city">TPE</div><div class="flight-time">14:35 桃園</div></div>
+        <div class="flight-mid"><div class="arr">→</div><div class="code">IT254 虎航</div></div>
+        <div style="text-align:right"><div class="flight-city">SDJ</div><div class="flight-time">18:45 仙台</div></div>
+      </div>
+    </div>
+    <div class="tl-item"><div class="tl-dot"></div><div class="tl-time">19:34</div><div class="tl-title">🚅 仙台機場 → 仙台車站</div><div class="tl-sub">仙台空港アクセス線，19:59 抵達</div></div>
+    <div class="tl-item"><div class="tl-dot green"></div><div class="tl-time">20:10</div><div class="tl-title">🏨 入住東横INN仙台東口1号館</div><div class="tl-sub">一人一間</div></div>
+    <div class="tl-item"><div class="tl-dot purple"></div><div class="tl-time">晚餐</div><div class="tl-title">🍖 たんや善治郎 駅前本店</div><div class="tl-sub">需排隊</div></div>
+  </div>
+  <div class="sec-label">✅ 待辦</div>
+  <div class="check-list">
+    <div class="check-item" onclick="toggleCheck(this)"><div class="cb todo"></div><span class="check-text todo">準備 10個100元日幣硬幣</span></div>
+    <div class="check-item" onclick="toggleCheck(this)"><div class="cb todo"></div><span class="check-text todo">住宿費 33,940 日幣</span></div>
+  </div>
+</div>
+
+<!-- PAGE 2: D2 -->
+<div class="page" id="page-2">
+  <div class="day-head">
+    <div class="day-head-top">
+      <div class="day-num-badge"><div class="dn">DAY</div><div class="dd">2</div></div>
+      <div class="day-head-text"><h2>仙台 → 藏王溫泉</h2><p>3/9 (一) · 首日滑雪</p></div>
+    </div>
+    <div class="day-pills">
+      <span class="pill ski">⛷️ 上の台ゲレンデ</span>
+      <span class="pill">🚌 高速巴士</span>
+      <span class="pill hotel">♨️ 五感の湯つるや</span>
+    </div>
+  </div>
+  <div class="sec-label">🗓️ 行程時刻</div>
+  <div class="timeline">
+    <div class="tl-item"><div class="tl-dot"></div><div class="tl-time">06:30</div><div class="tl-title">🍳 準時吃早餐</div></div>
+    <div class="tl-item"><div class="tl-dot"></div><div class="tl-time">07:30</div><div class="tl-title">🎒 準備出發</div></div>
+    <div class="tl-item">
+      <div class="tl-dot purple"></div><div class="tl-time">08:00</div><div class="tl-title">🚌 仙台駅 → 藏王溫泉</div>
+      <div class="tl-sub">山形交通高速巴士，09:25 抵達</div>
+      <div class="tl-note">仙台駅東口 76番 · 位置 7,8,12<br>帳號: hong · 密碼: 88</div>
+    </div>
+    <div class="tl-item"><div class="tl-dot green"></div><div class="tl-time">09:25</div><div class="tl-title">🚶 步行至五感の湯つるや</div><div class="tl-sub">寄放行李</div></div>
+    <div class="tl-item"><div class="tl-dot"></div><div class="tl-time">10:00</div><div class="tl-title">🎿 租雪具</div><div class="tl-sub">ベストレンタルプロショップ，租1天</div></div>
+    <div class="tl-item"><div class="tl-dot"></div><div class="tl-time">10:30</div><div class="tl-title">🎟️ 購買纜車票</div></div>
+    <div class="tl-item"><div class="tl-dot"></div><div class="tl-time">10:45</div><div class="tl-title">👟 寄放鞋子、衣服</div><div class="tl-sub">準備 400 日幣</div></div>
+    <div class="tl-item"><div class="tl-dot green"></div><div class="tl-time">11:00</div><div class="tl-title">⛷️ 開始滑雪！</div></div>
+    <div class="tl-item"><div class="tl-dot"></div><div class="tl-time">16:45</div><div class="tl-title">🔔 集合還裝備</div></div>
+    <div class="tl-item"><div class="tl-dot purple"></div><div class="tl-time">18:00</div><div class="tl-title">🍽️ 飯店晚餐</div></div>
+  </div>
+  <div class="sec-label">✅ 待辦</div>
+  <div class="check-list">
+    <div class="check-item is-done" onclick="toggleCheck(this)"><div class="cb done"></div><span class="check-text done">預約巴士</span></div>
+    <div class="check-item is-done" onclick="toggleCheck(this)"><div class="cb done"></div><span class="check-text done">預約雪具</span></div>
+    <div class="check-item" onclick="toggleCheck(this)"><div class="cb todo"></div><span class="check-text todo">預約纜車票（確認天數）</span></div>
+    <div class="check-item" onclick="toggleCheck(this)"><div class="cb todo"></div><span class="check-text todo">確認飯店費用 99,000 日幣</span></div>
+  </div>
+</div>
+
+<!-- PAGE 3: D3 -->
+<div class="page" id="page-3">
+  <div class="day-head">
+    <div class="day-head-top">
+      <div class="day-num-badge"><div class="dn">DAY</div><div class="dd">3</div></div>
+      <div class="day-head-text"><h2>藏王溫泉 滑雪</h2><p>3/10 (二) · 上の台ゲレンデ</p></div>
+    </div>
+    <div class="day-pills"><span class="pill ski">⛷️ 全天滑雪</span><span class="pill hotel">♨️ 五感の湯つるや</span></div>
+  </div>
+  <div class="sec-label">🗓️ 行程時刻</div>
+  <div class="timeline">
+    <div class="tl-item"><div class="tl-dot"></div><div class="tl-time">07:30</div><div class="tl-title">🍳 飯店早餐</div></div>
+    <div class="tl-item"><div class="tl-dot green"></div><div class="tl-time">08:00</div><div class="tl-title">🎿 取雪具</div><div class="tl-sub">klook 預約，租2天</div></div>
+    <div class="tl-item"><div class="tl-dot purple"></div><div class="tl-time">整天</div><div class="tl-title">⛷️ 滑雪</div><div class="tl-sub">午餐在雪場中央區</div></div>
+    <div class="tl-item"><div class="tl-dot"></div><div class="tl-time">16:45</div><div class="tl-title">🔔 集合還雪具</div></div>
+    <div class="tl-item"><div class="tl-dot"></div><div class="tl-time">17:00</div><div class="tl-title">🏨 回飯店</div><div class="tl-sub">洗衣服（房間有洗衣機）</div></div>
+    <div class="tl-item"><div class="tl-dot purple"></div><div class="tl-time">18:00</div><div class="tl-title">🍽️ 飯店晚餐</div></div>
+  </div>
+</div>
+
+<!-- PAGE 4: D4 -->
+<div class="page" id="page-4">
+  <div class="day-head">
+    <div class="day-head-top">
+      <div class="day-num-badge"><div class="dn">DAY</div><div class="dd">4</div></div>
+      <div class="day-head-text"><h2>藏王溫泉 · 換飯店</h2><p>3/11 (三) · 上の台ゲレンデ</p></div>
+    </div>
+    <div class="day-pills"><span class="pill ski">⛷️ 滑雪</span><span class="pill hotel">♨️ ルーセントタカミヤ</span></div>
+  </div>
+  <div class="sec-label">🗓️ 行程時刻</div>
+  <div class="timeline">
+    <div class="tl-item"><div class="tl-dot"></div><div class="tl-time">07:30</div><div class="tl-title">🍳 飯店早餐</div></div>
+    <div class="tl-item"><div class="tl-dot"></div><div class="tl-time">08:30</div><div class="tl-title">📦 寄放行李</div><div class="tl-sub">至下午五點</div></div>
+    <div class="tl-item"><div class="tl-dot green"></div><div class="tl-time">08:30~09:00</div><div class="tl-title">🎿 取雪具</div></div>
+    <div class="tl-item"><div class="tl-dot"></div><div class="tl-time">09:30</div><div class="tl-title">👟 寄放鞋子衣服</div><div class="tl-sub">400 日幣</div></div>
+    <div class="tl-item"><div class="tl-dot purple"></div><div class="tl-time">整天</div><div class="tl-title">⛷️ 滑雪</div><div class="tl-sub">午餐在雪場</div></div>
+    <div class="tl-item"><div class="tl-dot"></div><div class="tl-time">16:45</div><div class="tl-title">🔔 集合</div></div>
+    <div class="tl-item"><div class="tl-dot green"></div><div class="tl-time">17:10</div><div class="tl-title">🚶 轉移住宿</div><div class="tl-sub">名湯リゾート ルーセントタカミヤ</div></div>
+    <div class="tl-item"><div class="tl-dot purple"></div><div class="tl-time">18:00</div><div class="tl-title">🍽️ 飯店晚餐</div></div>
+  </div>
+</div>
+
+<!-- PAGE 5: D5 -->
+<div class="page" id="page-5">
+  <div class="day-head">
+    <div class="day-head-top">
+      <div class="day-num-badge"><div class="dn">DAY</div><div class="dd">5</div></div>
+      <div class="day-head-text"><h2>藏王溫泉 滑雪</h2><p>3/12 (四) · 中央ゲレンデ</p></div>
+    </div>
+    <div class="day-pills"><span class="pill ski">⛷️ 中央雪場</span><span class="pill hotel">♨️ ルーセントタカミヤ</span></div>
+  </div>
+  <div class="sec-label">🗓️ 行程時刻</div>
+  <div class="timeline">
+    <div class="tl-item"><div class="tl-dot"></div><div class="tl-time">07:00</div><div class="tl-title">🍳 飯店早餐</div></div>
+    <div class="tl-item"><div class="tl-dot green"></div><div class="tl-time">08:00</div><div class="tl-title">🎿 租雪具</div><div class="tl-sub">concierge-zao.info，租2天</div></div>
+    <div class="tl-item"><div class="tl-dot purple"></div><div class="tl-time">整天</div><div class="tl-title">⛷️ 滑雪</div><div class="tl-sub">午餐在雪場</div></div>
+    <div class="tl-item"><div class="tl-dot"></div><div class="tl-time">16:45</div><div class="tl-title">🔔 集合</div></div>
+    <div class="tl-item"><div class="tl-dot purple"></div><div class="tl-time">18:00</div><div class="tl-title">🍽️ 飯店晚餐</div></div>
+  </div>
+</div>
+
+<!-- PAGE 6: D6 -->
+<div class="page" id="page-6">
+  <div class="day-head">
+    <div class="day-head-top">
+      <div class="day-num-badge"><div class="dn">DAY</div><div class="dd">6</div></div>
+      <div class="day-head-text"><h2>藏王溫泉 → 山形</h2><p>3/13 (五) · 最後滑雪＋移動</p></div>
+    </div>
+    <div class="day-pills">
+      <span class="pill ski">⛷️ 中央ゲレンデ</span>
+      <span class="pill food">🍖 けむすけ</span>
+      <span class="pill hotel">🏨 Richmond Hotel</span>
+    </div>
+  </div>
+  <div class="sec-label">🗓️ 行程時刻</div>
+  <div class="timeline">
+    <div class="tl-item"><div class="tl-dot"></div><div class="tl-time">07:00</div><div class="tl-title">🍳 飯店早餐</div></div>
+    <div class="tl-item"><div class="tl-dot"></div><div class="tl-time">08:00</div><div class="tl-title">📦 寄放行李至下午五點</div></div>
+    <div class="tl-item"><div class="tl-dot purple"></div><div class="tl-time">整天</div><div class="tl-title">⛷️ 滑雪</div></div>
+    <div class="tl-item"><div class="tl-dot"></div><div class="tl-time">16:00</div><div class="tl-title">🔔 集合還雪具</div></div>
+    <div class="tl-item">
+      <div class="tl-dot green"></div><div class="tl-time">17:20</div><div class="tl-title">🚌 藏王溫泉 → 山形車站</div>
+      <div class="tl-sub">山形交通巴士，18:05 抵達</div>
+      <div class="tl-note">可用 Suica / Pasmo · 下一班 18:40</div>
+    </div>
+    <div class="tl-item"><div class="tl-dot green"></div><div class="tl-time">19:00</div><div class="tl-title">🏨 入住 リッチモンドホテル山形駅前</div><div class="tl-sub">洗衣服</div></div>
+    <div class="tl-item"><div class="tl-dot purple"></div><div class="tl-time">19:25</div><div class="tl-title">🍖 大衆焼肉ホルモン けむすけ</div></div>
+  </div>
+  <div class="sec-label">✅ 待辦</div>
+  <div class="check-list">
+    <div class="check-item is-done" onclick="toggleCheck(this)"><div class="cb done"></div><span class="check-text done">確認可以寄放行李</span></div>
+    <div class="check-item is-done" onclick="toggleCheck(this)"><div class="cb done"></div><span class="check-text done">確認交通卡（巴士可用 Suica）</span></div>
+    <div class="check-item" onclick="toggleCheck(this)"><div class="cb todo"></div><span class="check-text todo">預約晚餐</span></div>
+  </div>
+</div>
+
+<!-- PAGE 7: D7 -->
+<div class="page" id="page-7">
+  <div class="day-head">
+    <div class="day-head-top">
+      <div class="day-num-badge"><div class="dn">DAY</div><div class="dd">7</div></div>
+      <div class="day-head-text"><h2>山形 → 仙台</h2><p>3/14 (六) · 山寺 · 山形城</p></div>
+    </div>
+    <div class="day-pills">
+      <span class="pill">🏔️ 山寺</span><span class="pill">🏯 山形城</span>
+      <span class="pill food">🍜 続おそばに</span><span class="pill hotel">🏨 東横INN仙台</span>
+    </div>
+  </div>
+  <div class="sec-label">🗓️ 行程時刻</div>
+  <div class="timeline">
+    <div class="tl-item"><div class="tl-dot"></div><div class="tl-time">06:30</div><div class="tl-title">🍳 飯店早餐</div></div>
+    <div class="tl-item"><div class="tl-dot"></div><div class="tl-time">07:15</div><div class="tl-title">📦 寄放行李</div><div class="tl-sub">下午兩點半取</div></div>
+    <div class="tl-item">
+      <div class="tl-dot purple"></div><div class="tl-time">08:18</div><div class="tl-title">🚅 山形駅 → 山寺</div>
+      <div class="tl-sub">仙山線，08:37 抵達</div>
+      <div class="tl-note">來回山頂約 2 小時 · 研究是否需要冰爪</div>
+    </div>
+    <div class="tl-item"><div class="tl-dot"></div><div class="tl-time">11:22</div><div class="tl-title">🚅 山寺 → 山形駅</div><div class="tl-sub">仙山線，11:42 抵達</div></div>
+    <div class="tl-item"><div class="tl-dot green"></div><div class="tl-time">12:00</div><div class="tl-title">🍜 続おそばに</div></div>
+    <div class="tl-item"><div class="tl-dot"></div><div class="tl-time">13:15</div><div class="tl-title">🏯 逛山形城</div></div>
+    <div class="tl-item"><div class="tl-dot"></div><div class="tl-time">14:40</div><div class="tl-title">🧳 飯店取行李</div></div>
+    <div class="tl-item"><div class="tl-dot purple"></div><div class="tl-time">15:08</div><div class="tl-title">🚅 山形駅 → 仙台駅</div><div class="tl-sub">仙山線，16:33 抵達</div></div>
+    <div class="tl-item"><div class="tl-dot green"></div><div class="tl-time">17:00</div><div class="tl-title">🏨 入住東横INN仙台東口1号館</div></div>
+    <div class="tl-item"><div class="tl-dot purple"></div><div class="tl-time">18:00</div><div class="tl-title">🐄 牛タン焼専門店 司 東口ダイワロイネット店</div></div>
+    <div class="tl-item"><div class="tl-dot"></div><div class="tl-time">19:00</div><div class="tl-title">🌆 AER展望テラス · 逛街買藥妝</div></div>
+  </div>
+  <div class="sec-label">🛍️ Columbia 購物清單</div>
+  <div class="check-list">
+    <div class="check-item" onclick="toggleCheck(this)"><div class="cb todo"></div><span class="check-text todo">外套 WM9874256</span></div>
+    <div class="check-item" onclick="toggleCheck(this)"><div class="cb todo"></div><span class="check-text todo">帽T WM2782262</span></div>
+    <div class="check-item" onclick="toggleCheck(this)"><div class="cb todo"></div><span class="check-text todo">雪褲 WE9521262</span></div>
+  </div>
+  <div class="sec-label">✅ 待辦</div>
+  <div class="check-list">
+    <div class="check-item is-done" onclick="toggleCheck(this)"><div class="cb done"></div><span class="check-text done">蝦皮買冰爪</span></div>
+    <div class="check-item is-done" onclick="toggleCheck(this)"><div class="cb done"></div><span class="check-text done">確認晚餐</span></div>
+    <div class="check-item" onclick="toggleCheck(this)"><div class="cb todo"></div><span class="check-text todo">確認飯店費用 25,090 日幣</span></div>
+  </div>
+</div>
+
+<!-- PAGE 8: D8 -->
+<div class="page" id="page-8">
+  <div class="day-head">
+    <div class="day-head-top">
+      <div class="day-num-badge"><div class="dn">DAY</div><div class="dd">8</div></div>
+      <div class="day-head-text"><h2>仙台 → 磐梯山</h2><p>3/15 (日) · 松島遊覽</p></div>
+    </div>
+    <div class="day-pills">
+      <span class="pill">🌊 松島遊覽船</span><span class="pill food">🦪 牡蠣午餐</span>
+      <span class="pill">🚅 新幹線</span><span class="pill hotel">♨️ 磐梯山温泉ホテル</span>
+    </div>
+  </div>
+  <div class="sec-label">🗓️ 行程時刻</div>
+  <div class="timeline">
+    <div class="tl-item"><div class="tl-dot"></div><div class="tl-time">06:30</div><div class="tl-title">🍳 吃早餐</div></div>
+    <div class="tl-item"><div class="tl-dot"></div><div class="tl-time">07:30</div><div class="tl-title">📦 飯店寄放行李</div><div class="tl-sub">13:30 取</div></div>
+    <div class="tl-item"><div class="tl-dot purple"></div><div class="tl-time">08:15</div><div class="tl-title">🚅 仙台駅 → 松島海岸駅</div><div class="tl-sub">仙石線，08:55 抵達</div></div>
+    <div class="tl-item"><div class="tl-dot"></div><div class="tl-time">09:00</div><div class="tl-title">🦀 松島逛逛</div><div class="tl-sub">走去紅橋</div></div>
+    <div class="tl-item"><div class="tl-dot green"></div><div class="tl-time">10:00</div><div class="tl-title">⛵ 搭遊覽船</div><div class="tl-sub">每整點一班，已預約</div></div>
+    <div class="tl-item"><div class="tl-dot purple"></div><div class="tl-time">11:30</div><div class="tl-title">🦪 松島kouha 牡蠣專賣店</div><div class="tl-sub">已預約</div></div>
+    <div class="tl-item"><div class="tl-dot"></div><div class="tl-time">12:53</div><div class="tl-title">🚅 松島海岸駅 → 仙台駅</div><div class="tl-sub">仙石線，13:31 抵達</div></div>
+    <div class="tl-item"><div class="tl-dot"></div><div class="tl-time">13:30</div><div class="tl-title">🧳 取行李</div></div>
+    <div class="tl-item">
+      <div class="tl-dot purple"></div><div class="tl-time">14:00</div><div class="tl-title">🚅 搭新幹線</div>
+      <div class="flight-card">
+        <div><div class="flight-city">仙台</div><div class="flight-time">14:00 出發</div></div>
+        <div class="flight-mid"><div class="arr">→</div><div class="code">山彥214</div></div>
+        <div style="text-align:right"><div class="flight-city">郡山</div><div class="flight-time">14:36 抵達</div></div>
+      </div>
+    </div>
+    <div class="tl-item"><div class="tl-dot green"></div><div class="tl-time">15:25</div><div class="tl-title">🚌 郡山駅前 → 磐梯山温泉ホテル</div><div class="tl-sub">送迎バス，16:40 抵達</div></div>
+  </div>
+</div>
+
+<!-- PAGE 9: D9 -->
+<div class="page" id="page-9">
+  <div class="day-head">
+    <div class="day-head-top">
+      <div class="day-num-badge"><div class="dn">DAY</div><div class="dd">9</div></div>
+      <div class="day-head-text"><h2>磐梯山 滑雪</h2><p>3/16 (一) · 磐梯山温泉ホテル</p></div>
+    </div>
+    <div class="day-pills"><span class="pill ski">⛷️ 磐梯山雪場</span><span class="pill hotel">♨️ 磐梯山温泉ホテル</span></div>
+  </div>
+  <div class="sec-label">🗓️ 行程時刻</div>
+  <div class="timeline">
+    <div class="tl-item"><div class="tl-dot"></div><div class="tl-time">06:30</div><div class="tl-title">🍳 早餐</div></div>
+    <div class="tl-item"><div class="tl-dot green"></div><div class="tl-time">08:00</div><div class="tl-title">🎟️ 取雪票、取裝備</div><div class="tl-sub">已預約1天</div></div>
+    <div class="tl-item"><div class="tl-dot purple"></div><div class="tl-time">09:00</div><div class="tl-title">⛷️ 滑雪</div></div>
+    <div class="tl-item"><div class="tl-dot"></div><div class="tl-time">17:00</div><div class="tl-title">🔔 集合</div></div>
+    <div class="tl-item"><div class="tl-dot purple"></div><div class="tl-time">18:00</div><div class="tl-title">🍽️ 飯店晚餐</div></div>
+  </div>
+</div>
+
+<!-- PAGE 10: D10 -->
+<div class="page" id="page-10">
+  <div class="day-head">
+    <div class="day-head-top">
+      <div class="day-num-badge"><div class="dn">DAY</div><div class="dd">10</div></div>
+      <div class="day-head-text"><h2>磐梯山 → EN RESORT</h2><p>3/17 (二) · 移動豬苗代</p></div>
+    </div>
+    <div class="day-pills"><span class="pill ski">⛷️ 早場/自由</span><span class="pill">🚅 磐越西線</span><span class="pill hotel">🏨 EN RESORT</span></div>
+  </div>
+  <div class="sec-label">🗓️ 行程時刻</div>
+  <div class="timeline">
+    <div class="tl-item"><div class="tl-dot"></div><div class="tl-time">06:30</div><div class="tl-title">🍳 飯店早餐</div></div>
+    <div class="tl-item"><div class="tl-dot green"></div><div class="tl-time">08:00</div><div class="tl-title">⛷️ 滑雪 / 自由活動</div></div>
+    <div class="tl-item"><div class="tl-dot"></div><div class="tl-time">12:00</div><div class="tl-title">🔔 集合</div></div>
+    <div class="tl-item"><div class="tl-dot purple"></div><div class="tl-time">13:30</div><div class="tl-title">🚌 磐梯山温泉ホテル → 郡山駅</div><div class="tl-sub">送迎バス，14:45 抵達</div></div>
+    <div class="tl-item">
+      <div class="tl-dot"></div><div class="tl-time">15:15</div><div class="tl-title">🚅 郡山駅 → 豬苗代駅</div>
+      <div class="tl-sub">磐越西線，15:57 抵達</div>
+      <div class="tl-note">下一班：16:45 快速 → 16:53</div>
+    </div>
+    <div class="tl-item"><div class="tl-dot green"></div><div class="tl-time">17:00</div><div class="tl-title">🚌 → EN RESORT</div><div class="tl-sub">送迎バス，17:50 抵達</div></div>
+  </div>
+</div>
+
+<!-- PAGE 11: D11 -->
+<div class="page" id="page-11">
+  <div class="day-head">
+    <div class="day-head-top">
+      <div class="day-num-badge"><div class="dn">DAY</div><div class="dd">11</div></div>
+      <div class="day-head-text"><h2>EN RESORT</h2><p>3/18 (三) · Fam 安排</p></div>
+    </div>
+    <div class="day-pills"><span class="pill hotel">🏨 EN RESORT</span><span class="pill">🎉 Fam 安排</span></div>
+  </div>
+  <div class="sec-label">📝 備注</div>
+  <div class="tl-note" style="border-radius:12px;padding:16px;font-size:14px;color:var(--text);">詳細行程由 Fam 安排，待確認。</div>
+</div>
+
+<!-- PAGE 12: D12 -->
+<div class="page" id="page-12">
+  <div class="day-head">
+    <div class="day-head-top">
+      <div class="day-num-badge"><div class="dn">DAY</div><div class="dd">12</div></div>
+      <div class="day-head-text"><h2>EN RESORT → 郡山</h2><p>3/19 (四) · Fam 安排</p></div>
+    </div>
+    <div class="day-pills"><span class="pill">🎉 Fam 安排</span><span class="pill hotel">♨️ ドーミーイン郡山</span></div>
+  </div>
+  <div class="sec-label">🗓️ 行程</div>
+  <div class="timeline">
+    <div class="tl-item"><div class="tl-dot purple"></div><div class="tl-time">白天</div><div class="tl-title">🎉 Fam 安排</div></div>
+    <div class="tl-item"><div class="tl-dot green"></div><div class="tl-time">19:00</div><div class="tl-title">🏨 入住 磐梯の湯ドーミーインEXPRESS郡山</div></div>
+  </div>
+  <div class="sec-label">✅ 待辦</div>
+  <div class="check-list">
+    <div class="check-item is-done" onclick="toggleCheck(this)"><div class="cb done"></div><span class="check-text done">確認快速入住（需日本IP下載APP）</span></div>
+    <div class="check-item" onclick="toggleCheck(this)"><div class="cb todo"></div><span class="check-text todo">確認回程時間</span></div>
+    <div class="check-item" onclick="toggleCheck(this)"><div class="cb todo"></div><span class="check-text todo">確認飯店費用 29,700 日幣</span></div>
+  </div>
+</div>
+
+<!-- PAGE 13: D13 -->
+<div class="page" id="page-13">
+  <div class="day-head">
+    <div class="day-head-top">
+      <div class="day-num-badge"><div class="dn">DAY</div><div class="dd">13</div></div>
+      <div class="day-head-text"><h2>郡山 → 台北</h2><p>3/20 (五) · 回程日 🏠</p></div>
+    </div>
+    <div class="day-pills"><span class="pill red">✈️ IT753 回程</span><span class="pill">🚌 機場巴士</span></div>
+  </div>
+  <div class="sec-label">🗓️ 行程時刻</div>
+  <div class="timeline">
+    <div class="tl-item"><div class="tl-dot"></div><div class="tl-time">08:30</div><div class="tl-title">🍳 早餐</div></div>
+    <div class="tl-item"><div class="tl-dot"></div><div class="tl-time">12:00</div><div class="tl-title">🎟️ 買巴士車票</div><div class="tl-sub">福島交通バス 郡山駅前案内所</div></div>
+    <div class="tl-item"><div class="tl-dot purple"></div><div class="tl-time">13:05</div><div class="tl-title">🚌 郡山駅 → 福島機場</div><div class="tl-sub">機場巴士，13:50 抵達</div></div>
+    <div class="tl-item">
+      <div class="tl-dot green"></div><div class="tl-time">16:00</div><div class="tl-title">✈️ 起飛回台灣！</div>
+      <div class="flight-card">
+        <div><div class="flight-city">FKS</div><div class="flight-time">16:00 福島</div></div>
+        <div class="flight-mid"><div class="arr">→</div><div class="code">IT753 虎航</div></div>
+        <div style="text-align:right"><div class="flight-city">TPE</div><div class="flight-time">19:10 桃園</div></div>
+      </div>
+    </div>
+  </div>
+  <div class="sec-label">✅ 待辦</div>
+  <div class="check-list">
+    <div class="check-item is-done" onclick="toggleCheck(this)"><div class="cb done"></div><span class="check-text done">確認巴士付款（可刷卡，保險起見現場買）</span></div>
+    <div class="check-item is-done" onclick="toggleCheck(this)"><div class="cb done"></div><span class="check-text done">確認購票地點</span></div>
+  </div>
+</div>
+
+</div><!-- /pages -->
+
+<!-- NAV ARROWS -->
+<div class="nav-arrows">
+  <button class="nav-arrow prev" id="prevBtn" onclick="changeDay(-1)">←</button>
+  <button class="nav-arrow next" id="nextBtn" onclick="changeDay(1)">→</button>
+</div>
+
+<script>
+  let cur = 0;
+  const total = 14;
+  const tabs = document.querySelectorAll('.tab-btn');
+  const pages = document.querySelectorAll('.page');
+
+  function gotoDay(i) {
+    pages[cur].classList.remove('active');
+    tabs[cur].classList.remove('active');
+    cur = i;
+    pages[cur].classList.add('active');
+    tabs[cur].classList.add('active');
+    tabs[cur].scrollIntoView({behavior:'smooth',block:'nearest',inline:'center'});
+    window.scrollTo({top:0,behavior:'smooth'});
+    updateArrows();
+  }
+
+  function changeDay(dir) {
+    const n = cur + dir;
+    if (n >= 0 && n < total) gotoDay(n);
+  }
+
+  function updateArrows() {
+    document.getElementById('prevBtn').disabled = cur === 0;
+    document.getElementById('nextBtn').disabled = cur === total - 1;
+  }
+
+  function toggleCheck(el) {
+    const cb = el.querySelector('.cb');
+    const txt = el.querySelector('.check-text');
+    const isDone = cb.classList.contains('done');
+    if (isDone) {
+      cb.classList.replace('done','todo');
+      txt.classList.replace('done','todo');
+      el.classList.remove('is-done');
+    } else {
+      cb.classList.replace('todo','done');
+      txt.classList.replace('todo','done');
+      el.classList.add('is-done');
+    }
+  }
+
+  // Page swipe
+  let startX = 0;
+  document.querySelector('.pages').addEventListener('touchstart', e => startX = e.touches[0].clientX, {passive:true});
+  document.querySelector('.pages').addEventListener('touchend', e => {
+    const dx = e.changedTouches[0].clientX - startX;
+    if (Math.abs(dx) > 50) changeDay(dx < 0 ? 1 : -1);
+  }, {passive:true});
+
+  // Tab bar drag scroll
+  const tabBar = document.getElementById('tabsScroll');
+  let tabDragging = false, tabStartX = 0, tabScrollLeft = 0;
+
+  tabBar.addEventListener('mousedown', e => {
+    tabDragging = true;
+    tabBar.style.cursor = 'grabbing';
+    tabStartX = e.pageX - tabBar.offsetLeft;
+    tabScrollLeft = tabBar.scrollLeft;
+  });
+  document.addEventListener('mouseup', () => {
+    tabDragging = false;
+    tabBar.style.cursor = '';
+  });
+  document.addEventListener('mousemove', e => {
+    if (!tabDragging) return;
+    e.preventDefault();
+    const x = e.pageX - tabBar.offsetLeft;
+    tabBar.scrollLeft = tabScrollLeft - (x - tabStartX);
+  });
+
+  // Touch drag (for mobile momentum override when needed)
+  let tabTouchStartX = 0, tabTouchScrollLeft = 0, tabMoved = false;
+  tabBar.addEventListener('touchstart', e => {
+    tabTouchStartX = e.touches[0].pageX;
+    tabTouchScrollLeft = tabBar.scrollLeft;
+    tabMoved = false;
+  }, {passive:true});
+  tabBar.addEventListener('touchmove', e => {
+    const dx = e.touches[0].pageX - tabTouchStartX;
+    if (Math.abs(dx) > 5) tabMoved = true;
+    tabBar.scrollLeft = tabTouchScrollLeft - dx;
+  }, {passive:true});
+  // Prevent tab click after drag
+  tabBar.querySelectorAll('.tab-btn').forEach(btn => {
+    btn.addEventListener('click', e => { if (tabMoved) e.stopImmediatePropagation(); }, true);
+  });
+
+  updateArrows();
+</script>
+</body>
+</html>
