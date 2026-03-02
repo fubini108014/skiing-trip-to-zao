@@ -41,8 +41,11 @@ body { background:var(--bg); color:var(--text); font-family:'Segoe UI',system-ui
 .tabs-scroll {
   display:flex; gap:6px; overflow-x:auto; padding:0 16px 10px;
   scrollbar-width:none;
+  -webkit-overflow-scrolling:touch;
+  scroll-behavior:smooth;
+  overscroll-behavior-x:contain;
+  touch-action:pan-x;
 }
-.tabs-scroll::-webkit-scrollbar { display:none; }
 .tab-btn {
   flex-shrink:0; border:1px solid var(--border); background:var(--card2);
   color:var(--muted); border-radius:10px; padding:7px 12px;
@@ -696,7 +699,7 @@ body { background:var(--bg); color:var(--text); font-family:'Segoe UI',system-ui
     if (Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy) * 1.5) changeDay(dx < 0 ? 1 : -1);
   }, {passive:true});
 
-  // Tab bar drag scroll
+  // Tab bar drag scroll (mouse only, touch handled natively)
   const tabBar = document.getElementById('tabsScroll');
   let tabDragging = false, tabStartX = 0, tabScrollLeft = 0;
 
@@ -715,23 +718,6 @@ body { background:var(--bg); color:var(--text); font-family:'Segoe UI',system-ui
     e.preventDefault();
     const x = e.pageX - tabBar.offsetLeft;
     tabBar.scrollLeft = tabScrollLeft - (x - tabStartX);
-  });
-
-  // Touch drag (for mobile momentum override when needed)
-  let tabTouchStartX = 0, tabTouchScrollLeft = 0, tabMoved = false;
-  tabBar.addEventListener('touchstart', e => {
-    tabTouchStartX = e.touches[0].pageX;
-    tabTouchScrollLeft = tabBar.scrollLeft;
-    tabMoved = false;
-  }, {passive:true});
-  tabBar.addEventListener('touchmove', e => {
-    const dx = e.touches[0].pageX - tabTouchStartX;
-    if (Math.abs(dx) > 5) tabMoved = true;
-    tabBar.scrollLeft = tabTouchScrollLeft - dx;
-  }, {passive:true});
-  // Prevent tab click after drag
-  tabBar.querySelectorAll('.tab-btn').forEach(btn => {
-    btn.addEventListener('click', e => { if (tabMoved) e.stopImmediatePropagation(); }, true);
   });
 
   updateArrows();
