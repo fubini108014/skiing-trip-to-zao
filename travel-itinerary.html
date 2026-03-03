@@ -232,7 +232,6 @@ body { background:var(--bg); color:var(--text); font-family:'Segoe UI',system-ui
 </head>
 <body>
 
-<!-- HERO -->
 <div class="hero">
   <div style="display:flex;align-items:center;justify-content:center;gap:10px;flex-wrap:wrap;position:relative;">
     <div>
@@ -248,7 +247,6 @@ body { background:var(--bg); color:var(--text); font-family:'Segoe UI',system-ui
   </div>
 </div>
 
-<!-- TABS -->
 <div class="tabs-wrap">
   <div class="tabs-scroll" id="tabsScroll">
     <button class="tab-btn active" onclick="gotoDay(0)">資訊<span class="date">行前</span></button>
@@ -270,7 +268,6 @@ body { background:var(--bg); color:var(--text); font-family:'Segoe UI',system-ui
 
 <div class="pages">
 
-<!-- PAGE 0 -->
 <div class="page active" id="page-0">
   <div class="day-head">
     <div class="day-head-top">
@@ -298,16 +295,15 @@ body { background:var(--bg); color:var(--text); font-family:'Segoe UI',system-ui
   </div>
   <div class="sec-label">✅ 規劃者待辦</div>
   <div class="check-list">
-    <div class="check-item is-done" onclick="toggleCheck(this)"><div class="cb done"></div><span class="check-text done">確認行李寄放（Jeeper）</span></div>
-    <div class="check-item is-done" onclick="toggleCheck(this)"><div class="cb done"></div><span class="check-text done">確認飯店預定</span></div>
-    <div class="check-item is-done" onclick="toggleCheck(this)"><div class="cb done"></div><span class="check-text done">確認 VJW 申請</span></div>
-    <div class="check-item is-done" onclick="toggleCheck(this)"><div class="cb done"></div><span class="check-text done">檢查交通卡</span></div>
+    <div class="check-item" onclick="toggleCheck(this)"><div class="cb todo"></div><span class="check-text todo">確認行李寄放（Jeeper）</span></div>
+    <div class="check-item" onclick="toggleCheck(this)"><div class="cb todo"></div><span class="check-text todo">確認飯店預定</span></div>
+    <div class="check-item" onclick="toggleCheck(this)"><div class="cb todo"></div><span class="check-text todo">確認 VJW 申請</span></div>
+    <div class="check-item" onclick="toggleCheck(this)"><div class="cb todo"></div><span class="check-text todo">檢查交通卡</span></div>
     <div class="check-item" onclick="toggleCheck(this)"><div class="cb todo"></div><span class="check-text todo">列印飯店、餐廳、機票、車票資訊</span></div>
     <div class="check-item" onclick="toggleCheck(this)"><div class="cb todo"></div><span class="check-text todo">確認保險</span></div>
   </div>
 </div>
 
-<!-- PAGE 1 -->
 <div class="page" id="page-1">
   <div class="day-head">
     <div class="day-head-top">
@@ -339,7 +335,6 @@ body { background:var(--bg); color:var(--text); font-family:'Segoe UI',system-ui
   </div>
 </div>
 
-<!-- PAGE 2 -->
 <div class="page" id="page-2">
   <div class="day-head">
     <div class="day-head-top">
@@ -367,14 +362,13 @@ body { background:var(--bg); color:var(--text); font-family:'Segoe UI',system-ui
   </div>
   <div class="sec-label">✅ 待辦</div>
   <div class="check-list">
-    <div class="check-item is-done" onclick="toggleCheck(this)"><div class="cb done"></div><span class="check-text done">預約巴士</span></div>
-    <div class="check-item is-done" onclick="toggleCheck(this)"><div class="cb done"></div><span class="check-text done">預約雪具</span></div>
+    <div class="check-item" onclick="toggleCheck(this)"><div class="cb todo"></div><span class="check-text todo">預約巴士</span></div>
+    <div class="check-item" onclick="toggleCheck(this)"><div class="cb todo"></div><span class="check-text todo">預約雪具</span></div>
     <div class="check-item" onclick="toggleCheck(this)"><div class="cb todo"></div><span class="check-text todo">預約纜車票（確認天數）</span></div>
     <div class="check-item" onclick="toggleCheck(this)"><div class="cb todo"></div><span class="check-text todo">確認飯店費用 99,000 日幣</span></div>
   </div>
 </div>
 
-<!-- PAGE 3 -->
 <div class="page" id="page-3">
   <div class="day-head">
     <div class="day-head-top">
@@ -394,12 +388,11 @@ body { background:var(--bg); color:var(--text); font-family:'Segoe UI',system-ui
   </div>
 </div>
 
-<!-- PAGE 4 -->
 <div class="page" id="page-4">
   <div class="day-head">
     <div class="day-head-top">
       <div class="day-num-badge"><div class="dn">DAY</div><div class="dd">4</div></div>
-      <div class="day-head-text"><h2>藏王溫泉 · 換飯店</h2><p>3/11 (三) · 上の台ゲレンデ</p></div>
+      <div class="day-head-text"><h2>藏王溫泉 · 換飯店</h2><p>3/11 (三) · 上o台ゲレンデ</p></div>
     </div>
     <div class="day-pills"><span class="pill ski">⛷️ 滑雪</span><span class="pill hotel">♨️ ルーセントタカミヤ</span></div>
   </div>
@@ -416,7 +409,6 @@ body { background:var(--bg); color:var(--text); font-family:'Segoe UI',system-ui
   </div>
 </div>
 
-<!-- PAGE 5 -->
 <div class="page" id="page-5">
   <div class="day-head">
     <div class="day-head-top">
@@ -435,7 +427,6 @@ body { background:var(--bg); color:var(--text); font-family:'Segoe UI',system-ui
   </div>
 </div>
 
-<!-- PAGE 6 -->
 <div class="page" id="page-6">
   <div class="day-head">
     <div class="day-head-top">
@@ -460,13 +451,12 @@ body { background:var(--bg); color:var(--text); font-family:'Segoe UI',system-ui
   </div>
   <div class="sec-label">✅ 待辦</div>
   <div class="check-list">
-    <div class="check-item is-done" onclick="toggleCheck(this)"><div class="cb done"></div><span class="check-text done">確認可以寄放行李</span></div>
-    <div class="check-item is-done" onclick="toggleCheck(this)"><div class="cb done"></div><span class="check-text done">確認交通卡（巴士可用 Suica）</span></div>
+    <div class="check-item" onclick="toggleCheck(this)"><div class="cb todo"></div><span class="check-text todo">確認可以寄放行李</span></div>
+    <div class="check-item" onclick="toggleCheck(this)"><div class="cb todo"></div><span class="check-text todo">確認交通卡（巴士可用 Suica）</span></div>
     <div class="check-item" onclick="toggleCheck(this)"><div class="cb todo"></div><span class="check-text todo">預約晚餐</span></div>
   </div>
 </div>
 
-<!-- PAGE 7 -->
 <div class="page" id="page-7">
   <div class="day-head">
     <div class="day-head-top">
@@ -501,13 +491,12 @@ body { background:var(--bg); color:var(--text); font-family:'Segoe UI',system-ui
   </div>
   <div class="sec-label">✅ 待辦</div>
   <div class="check-list">
-    <div class="check-item is-done" onclick="toggleCheck(this)"><div class="cb done"></div><span class="check-text done">蝦皮買冰爪</span></div>
-    <div class="check-item is-done" onclick="toggleCheck(this)"><div class="cb done"></div><span class="check-text done">確認晚餐</span></div>
+    <div class="check-item" onclick="toggleCheck(this)"><div class="cb todo"></div><span class="check-text todo">蝦皮買冰爪</span></div>
+    <div class="check-item" onclick="toggleCheck(this)"><div class="cb todo"></div><span class="check-text todo">確認晚餐</span></div>
     <div class="check-item" onclick="toggleCheck(this)"><div class="cb todo"></div><span class="check-text todo">確認飯店費用 25,090 日幣</span></div>
   </div>
 </div>
 
-<!-- PAGE 8 -->
 <div class="page" id="page-8">
   <div class="day-head">
     <div class="day-head-top">
@@ -538,7 +527,6 @@ body { background:var(--bg); color:var(--text); font-family:'Segoe UI',system-ui
   </div>
 </div>
 
-<!-- PAGE 9 -->
 <div class="page" id="page-9">
   <div class="day-head">
     <div class="day-head-top">
@@ -557,7 +545,6 @@ body { background:var(--bg); color:var(--text); font-family:'Segoe UI',system-ui
   </div>
 </div>
 
-<!-- PAGE 10 -->
 <div class="page" id="page-10">
   <div class="day-head">
     <div class="day-head-top">
@@ -581,7 +568,6 @@ body { background:var(--bg); color:var(--text); font-family:'Segoe UI',system-ui
   </div>
 </div>
 
-<!-- PAGE 11 -->
 <div class="page" id="page-11">
   <div class="day-head">
     <div class="day-head-top">
@@ -594,7 +580,6 @@ body { background:var(--bg); color:var(--text); font-family:'Segoe UI',system-ui
   <div class="tl-note" style="border-radius:12px;padding:16px;font-size:14px;color:var(--text);">詳細行程由 Fam 安排，待確認。</div>
 </div>
 
-<!-- PAGE 12 -->
 <div class="page" id="page-12">
   <div class="day-head">
     <div class="day-head-top">
@@ -610,13 +595,12 @@ body { background:var(--bg); color:var(--text); font-family:'Segoe UI',system-ui
   </div>
   <div class="sec-label">✅ 待辦</div>
   <div class="check-list">
-    <div class="check-item is-done" onclick="toggleCheck(this)"><div class="cb done"></div><span class="check-text done">確認快速入住（需日本IP下載APP）</span></div>
+    <div class="check-item" onclick="toggleCheck(this)"><div class="cb todo"></div><span class="check-text todo">確認快速入住（需日本IP下載APP）</span></div>
     <div class="check-item" onclick="toggleCheck(this)"><div class="cb todo"></div><span class="check-text todo">確認回程時間</span></div>
     <div class="check-item" onclick="toggleCheck(this)"><div class="cb todo"></div><span class="check-text todo">確認飯店費用 29,700 日幣</span></div>
   </div>
 </div>
 
-<!-- PAGE 13 -->
 <div class="page" id="page-13">
   <div class="day-head">
     <div class="day-head-top">
@@ -641,22 +625,18 @@ body { background:var(--bg); color:var(--text); font-family:'Segoe UI',system-ui
   </div>
   <div class="sec-label">✅ 待辦</div>
   <div class="check-list">
-    <div class="check-item is-done" onclick="toggleCheck(this)"><div class="cb done"></div><span class="check-text done">確認巴士付款（可刷卡，保險起見現場買）</span></div>
-    <div class="check-item is-done" onclick="toggleCheck(this)"><div class="cb done"></div><span class="check-text done">確認購票地點</span></div>
+    <div class="check-item" onclick="toggleCheck(this)"><div class="cb todo"></div><span class="check-text todo">確認巴士付款（可刷卡，保險起見現場買）</span></div>
+    <div class="check-item" onclick="toggleCheck(this)"><div class="cb todo"></div><span class="check-text todo">確認購票地點</span></div>
   </div>
 </div>
 
-</div><!-- /pages -->
-
-<!-- GEAR MODAL -->
-<div class="modal-overlay" id="gearModal" onclick="closeModalOutside(event)">
+</div><div class="modal-overlay" id="gearModal" onclick="closeModalOutside(event)">
   <div class="modal-sheet" id="gearSheet">
     <div class="modal-handle-wrap"><div class="modal-handle"></div></div>
     <div class="modal-header">
       <h2>🏂 雪板裝備指南</h2>
       <button class="modal-close" onclick="closeModal()">✕</button>
     </div>
-    <!-- Sub-tabs -->
     <div class="modal-tabs">
       <button class="mtab active" onclick="switchMTab(0,this)">🏂 雪板</button>
       <button class="mtab" onclick="switchMTab(1,this)">🔩 Binding</button>
@@ -664,7 +644,6 @@ body { background:var(--bg); color:var(--text); font-family:'Segoe UI',system-ui
     </div>
     <div class="modal-body" id="modalBody">
 
-      <!-- 雪板 panel -->
       <div class="mpanel" id="mpanel-0">
         <div class="gear-section-label">1️⃣ 板型 / 底型（最重要）</div>
         <div class="gear-cards">
@@ -701,7 +680,6 @@ body { background:var(--bg); color:var(--text); font-family:'Segoe UI',system-ui
         </div>
       </div>
 
-      <!-- Binding panel -->
       <div class="mpanel" id="mpanel-1" style="display:none">
         <div class="gear-section-label">1️⃣ 類型</div>
         <div class="gear-cards">
@@ -733,7 +711,6 @@ body { background:var(--bg); color:var(--text); font-family:'Segoe UI',system-ui
         <p class="gear-tip" style="margin-top:8px;">❗ 一定依照「雪鞋尺寸」選</p>
       </div>
 
-      <!-- 雪鞋 panel -->
       <div class="mpanel" id="mpanel-2" style="display:none">
         <div class="gear-section-label">1️⃣ 鞋帶系統</div>
         <div class="gear-cards">
@@ -757,14 +734,11 @@ body { background:var(--bg); color:var(--text); font-family:'Segoe UI',system-ui
         <div class="gear-highlight-box">❗ 合腳比品牌重要 100 倍</div>
       </div>
 
-    </div><!-- /modal-body -->
-  </div>
+    </div></div>
 </div>
 
-<!-- GEAR FAB -->
 <button class="gear-fab" id="gearFab" onclick="openModal()">🏂</button>
 
-<!-- NAV ARROWS -->
 <div class="nav-arrows">
   <button class="nav-arrow prev" id="prevBtn" onclick="changeDay(-1)">←</button>
   <button class="nav-arrow next" id="nextBtn" onclick="changeDay(1)">→</button>
@@ -775,6 +749,33 @@ body { background:var(--bg); color:var(--text); font-family:'Segoe UI',system-ui
   const total = 14;
   const tabs = document.querySelectorAll('.tab-btn');
   const pages = document.querySelectorAll('.page');
+
+  // --- 新增：localStorage 邏輯 ---
+  const STORAGE_KEY = 'zao_ski_2026_checklist';
+
+  function saveCheckStatus() {
+    const status = {};
+    document.querySelectorAll('.check-item').forEach((el, idx) => {
+      status[idx] = el.classList.contains('is-done');
+    });
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(status));
+  }
+
+  function loadCheckStatus() {
+    const saved = localStorage.getItem(STORAGE_KEY);
+    if (!saved) return;
+    const status = JSON.parse(saved);
+    document.querySelectorAll('.check-item').forEach((el, idx) => {
+      if (status[idx]) {
+        const cb = el.querySelector('.cb');
+        const txt = el.querySelector('.check-text');
+        cb.classList.replace('todo', 'done');
+        txt.classList.replace('todo', 'done');
+        el.classList.add('is-done');
+      }
+    });
+  }
+  // -----------------------------
 
   function gotoDay(i) {
     pages[cur].classList.remove('active');
@@ -800,7 +801,8 @@ body { background:var(--bg); color:var(--text); font-family:'Segoe UI',system-ui
   function toggleCheck(el) {
     const cb = el.querySelector('.cb');
     const txt = el.querySelector('.check-text');
-    const isDone = cb.classList.contains('done');
+    const isDone = el.classList.contains('is-done');
+    
     if (isDone) {
       cb.classList.replace('done','todo');
       txt.classList.replace('done','todo');
@@ -810,6 +812,7 @@ body { background:var(--bg); color:var(--text); font-family:'Segoe UI',system-ui
       txt.classList.replace('todo','done');
       el.classList.add('is-done');
     }
+    saveCheckStatus(); // 點擊即儲存
   }
 
   // Modal
@@ -867,7 +870,11 @@ body { background:var(--bg); color:var(--text); font-family:'Segoe UI',system-ui
   document.addEventListener('mouseup', () => { tabDragging = false; tabBar.style.cursor=''; });
   document.addEventListener('mousemove', e => { if (!tabDragging) return; e.preventDefault(); tabBar.scrollLeft = tabScrollLeft - (e.pageX - tabBar.offsetLeft - tabStartX); });
 
-  updateArrows();
+  // 初始加載
+  window.addEventListener('DOMContentLoaded', () => {
+    loadCheckStatus();
+    updateArrows();
+  });
 </script>
 </body>
 </html>
